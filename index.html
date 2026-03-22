@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html id="hr" lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title id="pg-title">✦ Study Planner</title>
+
+<!-- ── Google Fonts ──────────────────────────────────────────────── -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Cinzel:wght@400;600&family=Quicksand:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=Kaisei+Opti:wght@400;700&family=M+PLUS+Rounded+1c:wght@400;700;900&family=BIZ+UDGothic:wght@400;700&family=Playfair+Display:wght@400;700;900&family=Bubblegum+Sans&family=Comfortaa:wght@400;600;700&family=Raleway:wght@400;600;700;800&family=Space+Grotesk:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&family=Lexend:wght@400;500;700&family=Atkinson+Hyperlegible:wght@400;700&family=Bebas+Neue&family=Righteous&family=Permanent+Marker&family=Dela+Gothic+One&family=Kiwi+Maru:wght@400;500&family=Yomogi&family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+
+<!-- ── Chart.js — for stats view charts ─────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<!-- ── Day.js — lightweight date utility (replaces manual date math) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/plugin/weekOfYear.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/plugin/isoWeek.min.js"></script>
+<script>dayjs.extend(window.dayjs_plugin_weekOfYear); dayjs.extend(window.dayjs_plugin_isoWeek);</script>
+
+<!-- ── Flatpickr — nicer date & time pickers ────────────────────── -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+
+<!-- ── SortableJS — drag-and-drop task / habit reordering ───────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+
+<!-- ── Fuse.js — fuzzy search ───────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/7.0.0/fuse.min.js"></script>
+<!-- ── canvas-confetti ──────────────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<!-- ── autosize ─────────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/6.0.1/autosize.min.js"></script>
+<!-- ── Pickr colour picker ──────────────────────────────────────── -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonweniger/pickr@1.9.1/dist/themes/nano.min.css" onerror="this.remove()">
+<script src="https://cdn.jsdelivr.net/npm/@simonweniger/pickr@1.9.1/dist/pickr.min.js" onerror="this.remove()"></script>
+<!-- ── hotkeys-js ───────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hotkeys-js/3.13.7/hotkeys.min.js"></script>
+<!-- ── Marked — markdown ─────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/11.1.1/marked.min.js"></script>
+<!-- ── Tippy.js tooltips ─────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tippy.js/6.3.7/tippy-bundle.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tippy.js/6.3.7/tippy.min.css">
+<!-- ── chroma.js ─────────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js"></script>
+<!-- ── anime.js — micro-animations ──────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+<!-- ── vanilla-tilt ──────────────────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+<!-- ── driver.js — guided tour ───────────────────────────────────── -->
+<!-- ── color-thief ───────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
+<!-- ── NProgress ─────────────────────────────────────────────────── -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" onerror="this.remove()">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<!-- ── Splitting.js ───────────────────────────────────────────────── -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/splitting@1.0.6/dist/splitting.min.css" onerror="this.remove()">
+<script src="https://cdn.jsdelivr.net/npm/splitting@1.0.6/dist/splitting.min.js"></script>
+<!-- ── WanaKana — romaji to kana conversion for JP diary tags ────── -->
+<script src="https://cdn.jsdelivr.net/npm/wanakana@5.3.1/umd/wanakana.min.js"></script>
+<!-- ── GSAP — pro-grade animations ───────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- ── Swiper — touch-friendly sliders ───────────────────────────── -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- ── Motion One — lightweight CSS animation helpers ────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js" onerror="this.remove()"></script>
+<!-- ── App stylesheet ───────────────────────────────────────────── -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- ══ SETUP OVERLAY — shown before app boots ══ -->
+<div id="setup-overlay" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:20px;background:radial-gradient(ellipse at 40% 40%,rgba(255,100,180,.18),rgba(160,90,255,.14),rgba(6,199,154,.1)),#0D000A">
+  <div style="background:rgba(20,0,40,.96);border:2px solid rgba(238,16,112,.35);border-radius:28px;padding:36px 32px;max-width:480px;width:100%;box-shadow:0 0 80px color-mix(in srgb, var(--p) 16%, transparent),0 0 200px color-mix(in srgb, var(--a) 12%, transparent);backdrop-filter:blur(24px);text-align:center">
+    <div style="font-size:52px;margin-bottom:12px;animation:bop 3s ease-in-out infinite;font-family:Apple Color Emoji,Noto Color Emoji,sans-serif">✦</div>
+    <h2 id="setup-title" style="font-family:Fredoka One,cursive;font-size:26px;background:linear-gradient(135deg,#FF6EB4,#A832F0,#FF2888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px">Getting My Shit Together</h2>
+<script>if((navigator.language||"").startsWith("ja")){var _st=document.getElementById("setup-title");if(_st)_st.textContent="まいにち ✦";}</script>
+    <p id="setup-desc" style="font-size:13px;color:rgba(255,200,240,.7);margin-bottom:20px;line-height:1.75">your notes, moods and diary live in <b style="color:#FF9FD0">a file you own</b>. no cloud, no accounts, nothing shared.<br>pick where to save it and you're in ✦</p>
+<script>if((navigator.language||"").startsWith("ja")){var _sd=document.getElementById("setup-desc");if(_sd)_sd.innerHTML='メモ、きもち、日記は<b style="color:#FF9FD0">あなたのデバイスに保存</b>される。クラウドなし、アカウント不要。ぜんぶあなたのもの ✦';}</script>
+
+    <!-- Browser-storage notice (shown when FSA not supported) -->
+    <div id="setup-no-fsa-note" style="display:none;background:rgba(255,180,60,.08);border:1px solid rgba(255,180,60,.28);border-radius:14px;padding:12px 16px;margin-bottom:18px;text-align:left">
+      <p style="font-size:12px;color:rgba(255,220,140,.85);font-weight:700;line-height:1.6;margin:0">
+        <span style="font-size:15px;vertical-align:middle;margin-right:5px">💛</span>
+        <b>your browser doesn't support local file saving</b> (Chrome &amp; Edge do if you want that). <br>
+        your data is saved <b style="color:#FFCF80">right here in your browser</b>. stays on your device, never touches a server. come back any time ✦
+      </p>
+    </div>
+
+    <div class="setup-msg" style="font-size:12px;color:#EF9FBF;margin-bottom:14px;font-style:italic;min-height:18px"></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button class="setup-new" style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--p),var(--a));color:white;border:none;border-radius:16px;padding:14px 24px;font-size:15px;font-weight:800;cursor:pointer;font-family:Nunito,sans-serif;transition:all .15s;box-shadow:0 4px 24px color-mix(in srgb, var(--p) 42%, transparent)" onclick="fsaCreate()" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <span style="font-size:20px">✦</span> Create new data file
+      </button>
+      <button class="setup-open" style="display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.1);color:white;border:2px solid rgba(220,100,168,.4);border-radius:16px;padding:14px 24px;font-size:15px;font-weight:800;cursor:pointer;font-family:Nunito,sans-serif;transition:all .15s" onclick="fsaOpen()" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <span style="font-size:18px">📂</span> Open existing file
+      </button>
+      <button class="setup-reconnect" style="display:none;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.1);color:white;border:2px solid color-mix(in srgb, var(--a) 40%, transparent);border-radius:16px;padding:14px 24px;font-size:15px;font-weight:800;cursor:pointer;font-family:Nunito,sans-serif;transition:all .15s" onclick="fsaReconnect()" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <span style="font-size:18px">🔗</span> Reconnect my file
+      </button>
+      <button class="setup-fallback-btn" style="display:none;background:rgba(255,255,255,.08);color:rgba(255,200,240,.6);border:1px dashed rgba(220,100,168,.3);border-radius:12px;padding:10px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;transition:all .15s" onclick="useFallback()">
+        Continue without file (browser storage only)
+      </button>
+      <button id="setup-browser-go" style="display:none;background:linear-gradient(135deg,var(--p),var(--a));color:white;border:none;border-radius:16px;padding:14px 24px;font-size:15px;font-weight:800;cursor:pointer;font-family:Nunito,sans-serif;transition:all .15s;box-shadow:0 4px 24px color-mix(in srgb, var(--p) 42%, transparent)" onclick="useFallback()" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        let's go ✦
+      </button>
+    </div>
+    <p style="font-size:10.5px;color:rgba(255,180,220,.32);margin-top:20px">your data · your device · yours forever ♡</p>
+  </div>
+</div>
+<div id="star-layer">
+  <div class="aur a1"></div><div class="aur a2"></div><div class="aur a3"></div>
+  <div class="sf s1" id="sf1"></div><div class="sf s2" id="sf2"></div><div class="sf s3" id="sf3"></div>
+</div>
+<div class="lb1"></div><div class="lb2"></div><div class="lb3"></div><div class="lb4"></div><div class="lb5"></div>
+<div class="dot-bg"></div>
+<div id="petal-layer"></div>
+<div id="custom-cursor">✦</div>
+<div id="custom-bg-layer"></div>
+<div id="sticker-toolbar" class="sticker-toolbar" style="display:none">
+  <button class="stk-tb-btn" onclick="openStickerPicker()" title="Add sticker">✦ stickers</button>
+  <button class="stk-tb-btn" onclick="clearPageStickers()" title="Clear all stickers">✕ clear</button>
+  <button class="stk-tb-btn stk-tb-active" onclick="toggleStickerMode()" id="stk-mode-btn">🔒 done</button>
+</div>
+<button class="stk-edit-fab" id="stk-edit-fab" onclick="toggleStickerMode()" title="Decorate page">🧸</button>
+
+<div class="topbar">
+  <button class="tbb" id="sound-btn" onclick="toggleSounds()" title="Toggle sounds">🔕</button>
+  <button class="tbb mode-cycle-btn" id="mode-btn" onclick="cycleMode()" title="Switch mode">🌙</button>
+  <button class="tbb" id="jp-btn" onclick="toggleJP()">JP</button>
+</div>
+<button class="mob-tog" id="mob-tog" onclick="toggleSB()">☰</button>
+<div class="sb-bd" id="sb-bd" onclick="toggleSB()"></div>
+
+<nav class="sb" id="sidebar">
+  <div class="lo-area">
+    <div class="lo-icon" id="lo-icon">🌙</div>
+    <div class="lo-name" id="sb-name">Getting<br>My Shit<br>Together</div>
+    <div class="lo-tag" id="sb-tag"></div>
+    <div class="lo-pets" id="lo-pets"></div>
+    <div class="tri-pill" id="tri-pill">...</div>
+  </div>
+  <div class="sb-gif-wrap hide" id="sb-gif-wrap">
+    <img id="sb-gif-img" class="sb-gif" src="" alt="">
+  </div>
+  <div class="nsec" data-i="nav_daily">daily</div>
+  <div class="ni act" data-v="today"><span class="ic">☀️</span><span data-i="n_today">Today</span></div>
+  <div class="ni" data-v="diary"><span class="ic">📖</span><span data-i="n_diary">Diary</span></div>
+  <div class="ni" data-v="habits"><span class="ic">🌱</span><span data-i="n_habits">Habits</span></div>
+  <div class="ni" data-v="braindump"><span class="ic">🧠</span><span data-i="n_dump">Brain dump</span><span class="nb" id="dump-b" style="display:none">0</span></div>
+  <div class="nsec" data-i="nav_study">study</div>
+  <div class="ni" data-v="timer"><span class="ic">⏱</span><span data-i="n_timer">Timer</span></div>
+  <div class="ni" data-v="cal"><span class="ic">📅</span><span data-i="n_cal">Calendar</span></div>
+  <div class="ni" data-v="week"><span class="ic">🗓</span><span data-i="n_week">Week</span></div>
+  <div class="ni" data-v="tasks"><span class="ic">✅</span><span data-i="n_tasks">Tasks</span><span class="nb" id="task-b" style="display:none">0</span></div>
+  <div class="ni" data-v="ass"><span class="ic">📝</span><span data-i="n_ass">Assessments</span></div>
+  <div class="nsec" data-i="nav_reflect">reflect</div>
+  <div class="ni" data-v="stats"><span class="ic">📊</span><span data-i="n_stats">Stats</span></div>
+  <div class="ni" data-v="notes"><span class="ic">📌</span><span data-i="n_notes">Unit notes</span></div>
+  <div class="ni" data-v="archive"><span class="ic">📦</span><span data-i="n_archive">Archive</span></div>
+  <div class="ni" data-v="settings"><span class="ic">⚙️</span><span data-i="n_settings">Settings</span></div>
+  <div class="sb-bot">
+    <div class="stk-row" id="stk-row"></div>
+    <div class="streak-b" id="streak-b">🔥 — day streak</div>
+    <div class="save-b s-ok" id="save-b">✦ all saved</div>
+  </div>
+</nav>
+
+<main class="main">
+<div id="sticker-canvas" class="sticker-canvas"></div>
+
+<div id="view-today" class="view act">
+  <div class="ph">
+    <div><h1 id="tg"></h1><p class="sub" id="tsub"></p></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <div id="t-clock" class="t-clock-wrap" aria-live="polite"></div>
+      <div id="t-vibes" style="display:none;background:var(--pl);border-radius:16px;padding:10px 14px;text-align:center;border:2px solid var(--pm)"></div>
+    </div>
+  </div>
+  <div id="t-quote" style="border-radius:18px;padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;gap:12px;border:2px solid var(--pm);background:linear-gradient(135deg,var(--pl),var(--al))"></div>
+  <div class="sg" id="t-stats"></div>
+  <div class="g2" style="margin-bottom:14px">
+    <div><div class="ct" data-i="c_tblks">📚 today's blocks</div><div id="t-blks"></div></div>
+    <div><div class="ct" data-i="c_due">⚠️ due soon</div><div id="t-due"></div></div>
+  </div>
+  <div class="ct" data-i="c_wprog">🎯 weekly progress</div>
+  <div class="card cnp" style="margin-bottom:14px" id="t-prog"></div>
+  <div class="ct" data-i="c_thab">🌱 today's habits</div>
+  <div class="card cnp" style="margin-bottom:14px" id="t-habtoday"></div>
+  <div class="ct" data-i="c_otasks">✅ open tasks</div>
+  <div id="t-tasks"></div>
+</div>
+
+<div id="view-diary" class="view">
+  <div class="ph">
+    <div><h1 data-i="h_diary">My diary 📖</h1><p class="sub" data-i="sub_diary">honest &amp; just for you ♡</p></div>
+    <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+      <button class="btn bsm" onclick="dNav(-1)">←</button>
+      <span id="d-lbl" style="font-size:13px;font-weight:800;min-width:150px;text-align:center"></span>
+      <button class="btn bsm" onclick="dNav(1)">→</button>
+      <button class="btn bsm" onclick="dToday()" data-i="b_today">Today</button>
+      <span id="d-wc-bar" style="font-size:10px;color:var(--fa);font-weight:700"></span><button class="btn bsm bp" id="d-mode-btn" onclick="toggleDiaryMode()">✏️</button>
+    </div>
+  </div>
+  <div id="d-gate"></div>
+  <div id="d-view-mode" style="display:none"></div>
+  <div id="d-body" style="display:none">
+    <div class="card cacc" style="margin-bottom:10px">
+      <div class="ct" data-i="c_checkin">✨ check in</div>
+      <div class="trkrow" style="margin-bottom:12px">
+        <div class="trkl" data-i="l_hope">🌟 Hope</div>
+        <div class="trkv" id="dhs"></div>
+        <span style="font-size:12px;color:var(--mu);font-style:italic;flex:1" data-i="l_hopesub">set at the door ✦</span>
+        <button class="btn bg_ bsm" onclick="reOpenGate()" data-i="b_edit">edit</button>
+      </div>
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:800;color:var(--mu);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px" data-i="l_mood">😊 mood</div>
+        <div style="display:flex;justify-content:space-around;padding:4px 0" id="moodrow">
+          <span class="moji" data-v="1" onclick="setMood(1)">😞</span>
+          <span class="moji" data-v="2" onclick="setMood(2)">😕</span>
+          <span class="moji" data-v="3" onclick="setMood(3)">😶</span>
+          <span class="moji" data-v="4" onclick="setMood(4)">🙂</span>
+          <span class="moji" data-v="5" onclick="setMood(5)">🥰</span>
+        </div>
+      </div>
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:800;color:var(--mu);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px"><span data-i="l_energy">⚡ energy</span></div>
+        <div style="display:flex;justify-content:space-around;padding:4px 0" id="energyrow">
+          <span class="moji" data-ev="1" onclick="setEnergy(1)" title="drained">🪫</span>
+          <span class="moji" data-ev="2" onclick="setEnergy(2)" title="low">😴</span>
+          <span class="moji" data-ev="3" onclick="setEnergy(3)" title="okay">😐</span>
+          <span class="moji" data-ev="4" onclick="setEnergy(4)" title="good">⚡</span>
+          <span class="moji" data-ev="5" onclick="setEnergy(5)" title="on fire">🚀</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <div>
+          <div style="font-size:10px;font-weight:900;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px"><span data-i="l_sleep">😴 sleep hrs</span></div>
+          <input type="number" id="ds-sleep" min="0" max="24" step="0.5" placeholder="7.5" oninput="dAuto()" style="font-size:13px;padding:6px 10px">
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:900;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px"><span data-i="l_water">💧 water glasses</span></div>
+          <input type="number" id="ds-water" min="0" max="20" step="1" placeholder="8" oninput="dAuto()" style="font-size:13px;padding:6px 10px">
+        </div>
+      </div>
+      <div id="d-trks"></div>
+      <div style="margin-top:12px">
+        <div class="ct" data-i="c_vibe">🌤 vibe check</div>
+        <div style="display:flex;gap:0;flex-wrap:wrap;margin-top:5px" id="d-kws"></div>
+      </div>
+      <div style="margin-top:12px">
+        <div style="font-size:10px;font-weight:900;color:var(--mu);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px"><span data-i="l_tags">🏷 tags</span></div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
+          <div id="d-tags-list" style="display:flex;gap:4px;flex-wrap:wrap"></div>
+          <input type="text" id="ds-tag-input" id="ds-tag-input-placeholder" placeholder="type + enter…" style="width:110px;font-size:11px;padding:4px 8px" onkeydown="if(event.key==='Enter'||event.key===','){addDiaryTag(this.value);this.value='';event.preventDefault();}">
+        </div>
+      </div>
+    </div>
+    <div class="card cnp" style="margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;gap:5px;flex-wrap:wrap">
+        <button class="btn bsm bg_" onclick="applyDiaryTemplate('morning')" data-i="l_template_morning" title="Morning reflection">🌅</button>
+        <button class="btn bsm bg_" onclick="applyDiaryTemplate('study')" data-i="l_template_study" title="Study review">📚</button>
+        <button class="btn bsm bg_" onclick="applyDiaryTemplate('night')" data-i="l_template_night" title="Night wind-down">🌙</button>
+        <button class="btn bsm bg_" onclick="applyDiaryTemplate('blank')" data-i="l_template_clear" title="Clear all">✕</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <label style="font-size:11px;font-weight:800;color:var(--mu);cursor:pointer;display:flex;align-items:center;gap:5px;margin:0" title="Hide from recent list">
+          <input type="checkbox" id="ds-private" onchange="dAuto()"> <span data-i="l_private">🔒 private</span>
+        </label>
+        <span id="d-wc" style="font-size:10px;color:var(--fa)"></span>
+      </div>
+    </div>
+    <div id="d-linked-tasks-card" class="card" style="margin-bottom:9px;display:none">
+      <div class="ct" data-i="l_linked_tasks">✅ linked tasks</div>
+      <div id="d-linked-tasks"></div>
+    </div>
+    <div class="card" style="margin-bottom:9px"><div class="ct" data-i="c_studied">📚 what i studied</div><textarea id="ds-studied" rows="3" oninput="dAuto();_updateDiaryWC()"></textarea></div>
+    <div class="card" style="margin-bottom:9px"><div class="ct" data-i="c_good">✨ what went well</div><textarea id="ds-good" rows="3" oninput="dAuto();_updateDiaryWC()"></textarea></div>
+    <div class="card" style="margin-bottom:9px"><div class="ct" data-i="c_struggle">💭 working through</div><textarea id="ds-struggle" rows="3" oninput="dAuto();_updateDiaryWC()"></textarea></div>
+    <div class="card" style="margin-bottom:9px"><div class="ct" data-i="c_grat">🌸 gratitude</div><textarea id="ds-grat" rows="2" oninput="dAuto();_updateDiaryWC()"></textarea></div>
+    <div class="card" style="margin-bottom:9px"><div class="ct" data-i="c_tom">🎯 tomorrow's focus</div><textarea id="ds-tom" rows="2" oninput="dAuto();_updateDiaryWC()"></textarea></div>
+    <div class="card" style="margin-bottom:9px"><div class="ct" data-i="c_free">📝 free write</div><textarea id="ds-free" rows="7" oninput="dAuto();_updateDiaryWC()" placeholder="vent, dream, ramble — this is yours ♡"></textarea></div>
+    <div class="card" style="margin-bottom:9px">
+      <div class="ct" data-i="c_diary_img">📸 image / gif (optional)</div>
+      <div class="entry-img-input-wrap">
+        <input type="text" id="ds-imgurl" placeholder="paste image or GIF URL…" style="flex:1;font-size:12px" oninput="dAuto();diaryImgPreview(this.value)">
+      </div>
+      <div id="ds-img-preview" style="display:none;margin-top:8px"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <button class="btn bp" onclick="saveDiary()" data-i="b_saveentry">Save entry ✦</button>
+      <span id="d-sv" style="font-size:12px;color:var(--mu)"></span>
+    </div>
+  </div>
+  <div id="d-recent" style="margin-top:24px"></div>
+</div>
+
+<div id="view-habits" class="view">
+  <div class="ph">
+    <div><h1 data-i="h_habits">Habits 🌱</h1><p class="sub" data-i="sub_habits">showing up is enough</p></div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
+      <button class="btn bsm" onclick="habNav(-1)">←</button>
+      <span id="hab-lbl" style="font-size:12px;font-weight:800;min-width:148px;text-align:center"></span>
+      <button class="btn bsm" onclick="habNav(1)">→</button>
+      <button class="btn bsm" onclick="habNav(0)" data-i="b_thisweek">This week</button>
+      <button class="btn bp" onclick="openHabitModal()" data-i="b_add">+ Add</button>
+    </div>
+  </div>
+  <div class="card cnp" id="hab-body"></div>
+  <div style="margin-top:16px"><div class="ct" data-i="c_streaks">🔥 streaks</div><div class="g3" id="hab-streaks"></div></div>
+</div>
+
+<div id="view-braindump" class="view">
+  <div class="ph">
+    <div><h1 data-i="h_dump">Brain dump 🧠</h1><p class="sub" data-i="sub_dump">unload. vent. ramble. it's just for you</p></div>
+  </div>
+  <div class="bd-compose">
+    <div class="bd-prompt">
+      <button class="bd-prompt-shuffle" onclick="shufflePrompt()" title="new prompt">✦</button>
+      <span id="bd-prompt-text"></span>
+    </div>
+    <div class="bd-tags" id="bd-tags"></div>
+    <div class="bd-textarea-wrap">
+      <textarea id="bd-input" class="bd-textarea" rows="4" oninput="bdCharCount(this)"></textarea>
+      <span class="bd-charcount" id="bd-charcount">0</span>
+    </div>
+    <div class="bd-toolbar">
+      <button class="btn bp" onclick="saveDump()" data-i="b_dump">Dump it ✦</button>
+      <button type="button" class="entry-img-toggle" onclick="toggleBdImgInput()" data-i="b_add_img" title="attach image/gif" style="margin-left:auto">📸</button>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer;margin:0"><input type="checkbox" id="bd-pin"> <span data-i="l_pin">Pin this</span></label>
+    </div>
+    <div class="entry-img-field" id="bd-img-field">
+      <input type="text" id="bd-imgurl" placeholder="paste image or GIF URL…" style="flex:1;font-size:12px" oninput="bdImgPreview(this.value)">
+      <div id="bd-img-preview" style="margin-top:6px;display:none"></div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+    <div class="bd-filter-bar" id="bd-filter-bar" style="margin-bottom:0;flex:1"></div>
+    <div class="bd-search">
+      <input type="text" id="bd-search" placeholder="search…" style="width:140px;font-size:12px;padding:6px 10px 6px 28px" oninput="rBrainDump()">
+    </div>
+    <span class="bd-stats" id="bd-stats"></span>
+    <button class="btn bsm bg_" id="bd-view-toggle" onclick="toggleBdView()" style="flex-shrink:0">🌀 chaos</button>
+  </div>
+  <div id="bd-list"></div>
+</div>
+
+<div id="view-timer" class="view">
+  <div class="ph">
+    <div><h1 data-i="h_timer">Study timer ⏱</h1><p class="sub" data-i="sub_timer">one thing at a time</p></div>
+    <button class="btn ba" onclick="openFocus()" data-i="b_focus">🎯 Focus mode</button>
+  </div>
+  <div class="g2">
+    <div class="card" style="display:flex;flex-direction:column;align-items:center">
+      <div class="mrow">
+        <button class="mbtn act" id="mb-cd" onclick="setTMode('cd')" data-i="b_countdown">Countdown</button>
+        <button class="mbtn" id="mb-sw" onclick="setTMode('sw')" data-i="b_stopwatch">Stopwatch</button>
+        <button class="mbtn" id="mb-po" onclick="setTMode('po')">Pomodoro 🍅</button>
+      </div>
+      <div style="padding:10px 0 4px;display:flex;flex-direction:column;align-items:center">
+        <div class="ring-wrap">
+          <svg width="200" height="200" viewBox="0 0 200 200" class="ring-svg">
+            <circle cx="100" cy="100" r="88" fill="none" stroke="var(--br)" stroke-width="11"/>
+            <circle id="tm-ring" cx="100" cy="100" r="88" fill="none" stroke="url(#tgrd)" stroke-width="11" stroke-linecap="round" stroke-dasharray="553" stroke-dashoffset="0" style="transition:stroke-dashoffset .5s linear"/>
+            <defs><linearGradient id="tgrd" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="var(--p)"/><stop offset="100%" stop-color="var(--a)"/></linearGradient></defs>
+          </svg>
+          <div class="rin"><div class="tmode-lbl" id="tm-lbl">Countdown</div><div class="tdig" id="tm-dig">25:00</div><div class="tsub" id="tm-sub">ready ♡</div></div>
+        </div>
+        <div class="sdots" id="sdots"></div>
+        <div class="t-btns">
+          <button class="tbig t-rst" onclick="tmReset()">↺</button>
+          <button class="tbig t-play idle" id="tm-pb" onclick="tmToggle()">▶</button>
+          <button class="tbig t-stop" onclick="tmStop()">⏹</button>
+        </div>
+      </div>
+      <div class="dv" style="width:100%"></div>
+      <div style="width:100%">
+        <div class="fg"><label data-i="l_unit">Unit</label><select id="tm-unit"></select></div>
+        <div id="tm-dur-row" class="g2">
+          <div class="fg"><label data-i="l_dur">Duration (min)</label><input type="number" id="tm-min" value="25" min="1" max="360"></div>
+          <div class="fg"><label data-i="l_brk">Break (min)</label><input type="number" id="tm-brk" value="5" min="1" max="60"></div>
+        </div>
+        <div id="tm-opts" style="display:none;margin-top:8px">
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;margin-bottom:5px"><input type="checkbox" id="tm-autobrk" checked><span data-i="l_autobrk">Auto-start breaks</span></label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer"><input type="checkbox" id="tm-autolog" checked><span data-i="l_autolog">Auto-log sessions</span></label>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:10px"><div class="ct" data-i="c_tsess">today's sessions</div><div id="tm-log"></div></div>
+      <div class="card"><div class="ct" data-i="c_tweek">this week</div><span id="tm-wktot" style="color:var(--pd);font-weight:900;font-size:12px"></span><div id="tm-week" style="margin-top:8px"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="focus-ov" id="focus-ol">
+  <div style="text-align:center;color:white;padding:20px">
+    <div style="font-size:48px;margin-bottom:10px;animation:bop 3s ease-in-out infinite;font-family:var(--ej)">🎯</div>
+    <div class="fdig" id="fo-dig">25:00</div>
+    <div style="font-size:15px;font-weight:800;color:rgba(255,255,255,.6);margin-top:6px" id="fo-unit"></div>
+    <div style="font-size:13px;font-style:italic;color:rgba(255,255,255,.38);margin-top:14px;max-width:300px;line-height:1.7;text-align:center" id="fo-quote"></div>
+    <div style="display:flex;gap:12px;margin-top:24px;justify-content:center">
+      <button class="tbig" onclick="tmToggle()" style="background:rgba(255,255,255,.18);color:white;border:2px solid rgba(255,255,255,.3)" id="fo-pb">▶</button>
+      <button class="tbig" onclick="closeFocus()" style="background:rgba(255,255,255,.1);color:white;border:2px solid rgba(255,255,255,.2)">✕</button>
+    </div>
+    <div class="sdots" id="fo-dots" style="margin-top:14px"></div>
+  </div>
+</div>
+
+<div id="view-cal" class="view">
+  <div class="ph"><h1 data-i="h_cal">Calendar 📅</h1>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
+      <button class="btn bsm" onclick="calNav(-1)">←</button>
+      <span id="cal-lbl" style="font-size:13px;font-weight:800;min-width:140px;text-align:center"></span>
+      <button class="btn bsm" onclick="calNav(1)">→</button>
+      <button class="btn bsm" onclick="calNav(0)" data-i="b_today">Today</button>
+      <button class="btn bp bsm" onclick="openBlkModal(tstr())" data-i="b_addblock">+ Block</button>
+      <button class="btn bsm" onclick="openAssModal('')" data-i="b_addass">+ Assessment</button>
+    </div>
+  </div>
+  <div class="card cnp"><div class="cg7" style="margin-bottom:4px" id="cal-heads"></div><div class="cg7" id="cal-grid"></div></div>
+  <div id="cal-panel" style="display:none;margin-top:12px"></div>
+</div>
+
+<div id="view-week" class="view">
+  <div class="ph"><h1 data-i="h_week">Week 🗓</h1>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
+      <button class="btn bsm" onclick="wkNav(-1)">←</button>
+      <span id="wk-lbl" style="font-size:12px;font-weight:800;min-width:165px;text-align:center"></span>
+      <button class="btn bsm" onclick="wkNav(1)">→</button>
+      <button class="btn bsm" onclick="wkNav(0)" data-i="b_thisweek">This week</button>
+      <button class="btn bp bsm" onclick="openBlkModal(ds(monday(wkOff)))" data-i="b_addblock">+ Block</button>
+    </div>
+  </div>
+  <div class="card cnp" style="overflow-x:auto"><div id="wk-body" style="min-width:460px"></div></div>
+  <p style="font-size:11px;color:var(--fa);margin-top:6px;text-align:center" data-i="hint_remove">Click a block to edit or remove it</p>
+</div>
+
+<div id="view-tasks" class="view">
+  <div class="ph">
+    <div><h1 data-i="h_tasks">Tasks ✅</h1><p class="sub" data-i="sub_tasks">what actually needs doing</p></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+      <input type="text" id="task-search" placeholder="🔍 search" style="width:160px" oninput="rTasks()">
+      <button class="btn bp" onclick="openTaskModal('')" data-i="b_addtask">+ Add task</button>
+    </div>
+  </div>
+  <div id="tasks-body"></div>
+</div>
+
+<div id="view-ass" class="view">
+  <div class="ph"><div><h1 data-i="h_ass">Assessments 📝</h1><p class="sub" data-i="sub_ass">deadlines and grades</p></div><button class="btn bp" onclick="openAssModal('')" data-i="b_add">+ Add</button></div>
+  <div id="ass-grade-overview" style="display:none;margin-bottom:14px"></div>
+  <div id="ass-body"></div>
+</div>
+
+<div id="view-stats" class="view">
+  <div class="ph"><h1 data-i="h_stats">Stats 📊</h1><p class="sub" data-i="sub_stats">your patterns, your progress</p></div>
+  <div class="g2" style="margin-bottom:14px">
+    <div class="card"><div class="ct" data-i="c_heat">🗓 study heatmap — past year</div><div id="st-heat" style="overflow-x:auto"></div></div>
+    <div class="card"><div class="ct" data-i="c_wku">📅 this week by unit</div><div id="st-week"></div></div>
+  </div>
+  <div id="st-units" style="display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));margin-bottom:14px"></div>
+  <div class="card"><div class="ct" data-i="c_moodhist">😊 mood history — last 30 days</div><div id="st-mood"></div></div>
+</div>
+
+<div id="view-notes" class="view">
+  <div class="ph"><h1 data-i="h_notes">Unit notes 📌</h1><p class="sub" data-i="sub_notes">dump the stuff your brain won't hold</p></div>
+  <div id="notes-body"></div>
+</div>
+
+<div id="view-archive" class="view">
+  <div class="ph"><div><h1 data-i="h_archive">Archive 📦</h1><p class="sub" data-i="sub_archive">everything you've been through, saved</p></div></div>
+  <div id="archive-body"></div>
+</div>
+
+<div id="view-settings" class="view">
+  <h1 style="margin-bottom:4px" data-i="h_settings">Settings ⚙️</h1>
+  <p class="sub" data-i="sub_settings">make it yours ✦</p>
+
+  <h3 data-i="sh_id">✦ Identity</h3>
+  <div class="card" style="margin-bottom:6px">
+    <div class="fg"><label data-i="l_appname">Site name</label><input type="text" id="s-appname" placeholder="getting my shit together"></div>
+    <div class="fg"><label data-i="l_tagline">Sidebar tagline</label><input type="text" id="s-tagline" placeholder="set me in settings ✦"></div>
+    <div class="fg"><label data-i="l_icon">Sidebar icon</label>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input type="text" id="s-logoi" style="width:65px;text-align:center;font-family:var(--ej);font-size:18px">
+        <button class="btn bsm" onclick="openEmojiPicker('s-logoi')" data-i="b_pick">pick ✦</button>
+      </div>
+    </div>
+    <div class="fg"><label data-i="l_quote">Daily quote / affirmation</label><textarea id="s-quote" rows="2" placeholder="your daily affirmation, a lyric, whatever gets you going ✦"></textarea></div>
+    <button class="btn bp bsm" onclick="saveIdentity()" data-i="b_save">Save ✦</button>
+  </div>
+
+  <h3 data-i="sh_sbgif">🎨 Sidebar widget image / GIF</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:11px;color:var(--mu);margin-bottom:10px" data-i="hint_sbgif">an image or GIF in your sidebar. paste a direct URL. set separately for light and dark mode.</p>
+    <div class="fg"><label data-i="l_sbgif_light">☀️ Light mode URL</label><input type="text" id="s-sbgif-light" placeholder="https://..." oninput="saveSbGif()"></div>
+    <div class="fg"><label data-i="l_sbgif_dark">🌙 Dark mode URL</label><input type="text" id="s-sbgif-dark" placeholder="https://..." oninput="saveSbGif()"></div>
+    <button class="btn bg_ bsm" onclick="clearSbGif()" data-i="b_sbgif_clear">Clear</button>
+  </div>
+
+  <h3 data-i="sh_tri">✦ Trimester</h3>
+  <div class="card" style="margin-bottom:6px">
+    <div class="frow" style="margin-bottom:10px">
+      <div class="fg"><label data-i="l_triname">Current trimester name</label><input type="text" id="s-tri"></div>
+      <div style="padding-top:18px"><button class="btn bp bsm" onclick="saveTri()" data-i="b_save">Save</button></div>
+    </div>
+    <div class="dv"></div>
+    <p style="font-size:13px;color:var(--mu);margin-bottom:10px" data-i="txt_newtri">Starting fresh? This archives your current blocks, tasks, diary, and everything else — then wipes the slate clean. Nothing gets deleted, just moved to Archive where you can read it any time.</p>
+    <button class="btn bsm" style="border-color:var(--g);color:var(--gd)" onclick="newTri()" data-i="b_newtri">🌱 Start new trimester</button>
+  </div>
+
+  <h3 data-i="sh_units">📚 Units</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:11px;color:var(--mu);margin-bottom:10px" data-i="hint_units">Name · colour picker · weekly hour goal. Add as many as you need.</p>
+    <div id="s-units"></div>
+    <button class="btn bsm" onclick="addUnit()" style="margin-top:8px" data-i="b_addunit">+ Add unit</button>
+  </div>
+
+  <h3 data-i="sh_trks">🧠 Psych &amp; wellness trackers</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:11px;color:var(--mu);margin-bottom:10px" data-i="hint_trks">These show as sliders in your daily diary. Add, remove, rename — make them yours.</p>
+    <div id="s-trks"></div>
+    <button class="btn bsm" onclick="addTrk()" style="margin-top:8px" data-i="b_addtrk">+ Add tracker</button>
+  </div>
+
+  <h3 data-i="sh_vibes">💬 Vibe check keywords</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:11px;color:var(--mu);margin-bottom:8px" data-i="hint_vibes">Comma-separated. Click any keyword in your diary to tag your day.</p>
+    <div class="fg"><textarea id="s-vibes" rows="3"></textarea></div>
+    <button class="btn bp bsm" onclick="saveVibes()" data-i="b_save">Save ✦</button>
+  </div>
+
+  <h3 data-i="sh_dump_cats">🏷 Brain dump categories</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:11px;color:var(--mu);margin-bottom:10px" data-i="hint_dump_cats">Customise the tags you can apply to brain dump entries. Add your own, delete what you don't use.</p>
+    <div id="s-dump-tags" style="margin-bottom:10px"></div>
+    <button class="btn bsm bp" onclick="addDumpTagModal()" style="margin-top:4px" data-i="b_add_dump_cat">+ Add category</button>
+    <button class="btn bsm bg_" onclick="resetDumpTags()" style="margin-top:4px" data-i="b_reset_dump_cats">↺ Reset to defaults</button>
+  </div>
+
+  <h3 data-i="sh_habs">🌱 Habits</h3>
+  <div class="card" style="margin-bottom:6px">
+    <div id="s-habits"></div>
+    <button class="btn bsm" onclick="openHabitModal()" style="margin-top:8px" data-i="b_addhab">+ Add habit</button>
+  </div>
+
+  <h3>🌙 Display mode</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:11px;color:var(--mu);margin-bottom:10px" id="mode-hint-text">click the moon button in the top right to cycle modes</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn bsm" data-dm="light" onclick="setMode('light')">☀️ <span id="mode-lbl-light">light</span></button>
+      <button class="btn bsm" data-dm="dark" onclick="setMode('dark')">🌙 <span id="mode-lbl-dark">dark</span></button>
+      <button class="btn bsm" data-dm="goth" onclick="setMode('goth')">🥀 <span id="mode-lbl-goth">full goth</span></button>
+    </div>
+    <p style="font-size:10px;color:var(--fa);margin-top:8px" id="mode-desc-text"></p>
+  </div>
+
+  <h3 data-i="sh_vibe_mode">✨ Vibe mode</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:11px;color:var(--mu);margin-bottom:10px" data-i="l_vibe_mode">overall aesthetic</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn bsm" data-vm="clean" onclick="setVibeMode('clean')" data-i="vm_clean">◎ clean</button>
+      <button class="btn bsm" data-vm="dreamy" onclick="setVibeMode('dreamy')" data-i="vm_dreamy">✦ dreamy</button>
+      <button class="btn bsm" data-vm="cyber" onclick="setVibeMode('cyber')" data-i="vm_cyber">⚡ cyber</button>
+      <button class="btn bsm" data-vm="cottagecore" onclick="setVibeMode('cottagecore')" data-i="vm_cottagecore">🌿 cottage</button>
+    </div>
+  </div>
+
+  <h3 data-i="sh_custom">✦ Style &amp; feel</h3>
+  <div class="card" style="margin-bottom:6px">
+    <div class="fg">
+      <label data-i="l_roundness">Corner roundness</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" id="round-btns">
+        <button class="btn bsm" onclick="setRound('max')" data-r="max" data-i="r_max">✦ Extra round</button>
+        <button class="btn bsm bp" onclick="setRound('med')" data-r="med" data-i="r_med">● Round</button>
+        <button class="btn bsm" onclick="setRound('min')" data-r="min" data-i="r_min">■ Slight</button>
+        <button class="btn bsm" onclick="setRound('none')" data-r="none" data-i="r_none">□ Square</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_glow">Card glow</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" id="glow-btns">
+        <button class="btn bsm" onclick="setGlow('high')" data-g="high" data-i="g_high">✨ High glow</button>
+        <button class="btn bsm bp" onclick="setGlow('med')" data-g="med" data-i="g_med">◎ Normal</button>
+        <button class="btn bsm" onclick="setGlow('none')" data-g="none" data-i="g_none">○ No glow</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_sbwidth">Sidebar width</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" id="sbw-btns">
+        <button class="btn bsm" onclick="setSbw('narrow')" data-s="narrow" data-i="sbw_narrow">◀▶ Narrow</button>
+        <button class="btn bsm bp" onclick="setSbw('med')" data-s="med" data-i="sbw_med">▷ Default</button>
+        <button class="btn bsm" onclick="setSbw('wide')" data-s="wide" data-i="sbw_wide">◁▷ Wide</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_cardpattern">Card pattern 🃏</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm bp" onclick="setCardPattern('none')" data-pat="none" data-i="pat_none">✕ None</button>
+        <button class="btn bsm" onclick="setCardPattern('lace')" data-pat="lace" data-i="pat_lace">🕸 Lace (dark)</button>
+        <button class="btn bsm" onclick="setCardPattern('hearts')" data-pat="hearts">♡ Hearts</button>
+        <button class="btn bsm" onclick="setCardPattern('stars')" data-pat="stars">☆ Stars</button>
+        <button class="btn bsm" onclick="setCardPattern('sakura')" data-pat="sakura">✿ Sakura</button>
+        <button class="btn bsm" onclick="setCardPattern('polka')" data-pat="polka">● Polka</button>
+        <button class="btn bsm" onclick="setCardPattern('grid')" data-pat="grid">⊞ Grid</button>
+        <button class="btn bsm" onclick="setCardPattern('diamonds')" data-pat="diamonds">◇ Diamonds</button>
+        <button class="btn bsm" onclick="setCardPattern('waves')" data-pat="waves">〰 Waves</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_card_tint">🎨 Card tint</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm bp" onclick="setCardTint('none')" data-ct="none" data-i="ct_none">✕ None</button>
+        <button class="btn bsm" onclick="setCardTint('pink')" data-ct="pink">🌸 Pink</button>
+        <button class="btn bsm" onclick="setCardTint('lavender')" data-ct="lavender">💜 Lavender</button>
+        <button class="btn bsm" onclick="setCardTint('mint')" data-ct="mint">🌿 Mint</button>
+        <button class="btn bsm" onclick="setCardTint('peach')" data-ct="peach">🍑 Peach</button>
+        <button class="btn bsm" onclick="setCardTint('sky')" data-ct="sky">🩵 Sky</button>
+        <button class="btn bsm" onclick="setCardTint('rose')" data-ct="rose">🌹 Rose</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_card_border_style">🖼 Card border</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm bp" onclick="setCardBorder('solid')" data-cb="solid" data-i="cb_solid">— Solid</button>
+        <button class="btn bsm" onclick="setCardBorder('dashed')" data-cb="dashed" data-i="cb_dashed">- - Dashed</button>
+        <button class="btn bsm" onclick="setCardBorder('double')" data-cb="double" data-i="cb_double">═ Double</button>
+        <button class="btn bsm" onclick="setCardBorder('none')" data-cb="none" data-i="cb_none">○ None</button>
+        <button class="btn bsm" onclick="setCardBorder('thick')" data-cb="thick" data-i="cb_thick">▌ Thick</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_card_shadow">☁️ Card shadow</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm" onclick="setCardShadow('none')" data-cs="none" data-i="cs_none">○ None</button>
+        <button class="btn bsm" onclick="setCardShadow('sm')" data-cs="sm" data-i="cs_sm">◎ Subtle</button>
+        <button class="btn bsm bp" onclick="setCardShadow('med')" data-cs="med" data-i="cs_med">◉ Default</button>
+        <button class="btn bsm" onclick="setCardShadow('lg')" data-cs="lg" data-i="cs_lg">✦ Dreamy</button>
+        <button class="btn bsm" onclick="setCardShadow('glow')" data-cs="glow" data-i="cs_glow">🌟 Glow</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_card_opacity">🫧 Card glass opacity</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm" onclick="setCardBgOpacity('ghost')" data-co="ghost" data-i="co_ghost">👻 Ghost</button>
+        <button class="btn bsm" onclick="setCardBgOpacity('low')" data-co="low" data-i="co_low">🌫 Frosted</button>
+        <button class="btn bsm bp" onclick="setCardBgOpacity('med')" data-co="med" data-i="co_med">◎ Default</button>
+        <button class="btn bsm" onclick="setCardBgOpacity('solid')" data-co="solid" data-i="co_solid">■ Solid</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_holomode">Holographic cards ✨</label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin:0">
+        <input type="checkbox" id="holo-tog" onchange="setHolo(this.checked)">
+        <span data-i="l_holo_hint">Iridescent rainbow card borders</span>
+      </label>
+    </div>
+    <div class="fg">
+      <label data-i="l_cursor">Cute cursor ✦</label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin:0">
+        <input type="checkbox" id="cursor-tog" onchange="setCursor(this.checked)">
+        <span data-i="l_cursor_hint">Replace cursor with ✦ sparkle</span>
+      </label>
+      <div style="margin-top:6px;display:flex;gap:5px;flex-wrap:wrap" id="cursor-emoji-btns"></div>
+    </div>
+    <div class="fg">
+      <label data-i="l_rainbowmode">Rainbow mode 🌈</label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin:0">
+        <input type="checkbox" id="rainbow-tog" onchange="setRainbow(this.checked)">
+        <span data-i="l_rainbow_hint">Animate rainbow effects (disable for calmer vibes)</span>
+      </label>
+    </div>
+    <div class="fg">
+      <label>🕐 <span data-i="l_clock_fmt">Clock format</span></label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin:0">
+        <input type="checkbox" id="clock12-tog" onchange="setClock12(this.checked)">
+        <span data-i="l_clock12_hint">12-hour (AM/PM)</span>
+      </label>
+    </div>
+    <div class="fg">
+      <label data-i="l_fontsize">🔠 Font size</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm" onclick="setFontSize('sm')" data-fs="sm" data-i="fs_sm">小 Small</button>
+        <button class="btn bsm bp" onclick="setFontSize('md')" data-fs="md" data-i="fs_md">中 Default</button>
+        <button class="btn bsm" onclick="setFontSize('lg')" data-fs="lg" data-i="fs_lg">大 Large</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_density">📐 Layout density</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm" onclick="setDensity('compact')" data-dn="compact" data-i="dn_compact">◾ Compact</button>
+        <button class="btn bsm bp" onclick="setDensity('default')" data-dn="default" data-i="dn_def">◻ Default</button>
+        <button class="btn bsm" onclick="setDensity('wide')" data-dn="wide" data-i="dn_wide">◽ Wide</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_anim_speed">✨ Animation speed</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm" onclick="setAnimSpeed('slow')" data-as="slow" data-i="anim_slow">🌿 Slow</button>
+        <button class="btn bsm bp" onclick="setAnimSpeed('med')" data-as="med" data-i="anim_med">⚡ Normal</button>
+        <button class="btn bsm" onclick="setAnimSpeed('fast')" data-as="fast" data-i="anim_fast">🌪 Fast</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_accent_glow">💡 Accent glow</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm" onclick="setAccentGlow('none')" data-ag="none">○ Off</button>
+        <button class="btn bsm bp" onclick="setAccentGlow('soft')" data-ag="soft">◎ Soft</button>
+        <button class="btn bsm" onclick="setAccentGlow('vivid')" data-ag="vivid">✦ Vivid</button>
+        <button class="btn bsm" onclick="setAccentGlow('max')" data-ag="max">🌟 Max</button>
+      </div>
+    </div>
+  </div>
+
+  <h3 data-i="sh_theme">🎨 Theme &amp; Colours</h3>
+  <div class="card" style="margin-bottom:6px">
+    <div class="ct" style="margin-bottom:10px" data-i="c_presets">Preset palettes</div>
+    <div id="theme-sw" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px"></div>
+    <div class="frow">
+      <div class="fg"><label data-i="l_cprimary">Primary colour</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div id="pickr-p" style="flex-shrink:0"></div>
+          <input type="text" id="cc-p-t" value="#C4126A" style="flex:1;font-family:monospace;font-size:12px" oninput="syncColour('--p',this.value)">
+        </div>
+      </div>
+      <div class="fg"><label data-i="l_csec">Accent colour</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div id="pickr-a" style="flex-shrink:0"></div>
+          <input type="text" id="cc-a-t" value="#7B2FD8" style="flex:1;font-family:monospace;font-size:12px" oninput="syncColour('--a',this.value)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 data-i="sh_font">🔤 Font</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:11px;color:var(--mu);margin-bottom:4px" data-i="hint_fonts">Body text. Choose separately for each language.</p>
+    <p id="hint-font-lang" style="font-size:11px;color:var(--fa);margin-bottom:10px;font-style:italic"></p>
+    <div class="fg"><label>Body font</label><div style="display:flex;gap:6px;flex-wrap:wrap" id="font-btns"></div></div>
+    <div class="fg" style="margin-top:10px"><label>Heading font (independent)</label><div style="display:flex;gap:6px;flex-wrap:wrap" id="heading-font-btns"></div></div>
+    <div class="fg">
+      <label data-i="l_line_height">↕ Line height</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm" onclick="setLineHeight('tight')" data-lh="tight" data-i="lh_tight">▪ Tight</button>
+        <button class="btn bsm bp" onclick="setLineHeight('normal')" data-lh="normal" data-i="lh_normal">◎ Normal</button>
+        <button class="btn bsm" onclick="setLineHeight('relaxed')" data-lh="relaxed" data-i="lh_relaxed">▫ Relaxed</button>
+        <button class="btn bsm" onclick="setLineHeight('loose')" data-lh="loose" data-i="lh_loose">□ Loose</button>
+      </div>
+    </div>
+  </div>
+
+  <h3 data-i="l_adv_layout">🎛 Advanced layout</h3>
+  <div class="card" style="margin-bottom:6px">
+    <div class="fg">
+      <label data-i="l_radius">📐 Card radius (fine control)</label>
+      <div style="display:flex;align-items:center;gap:10px">
+        <input type="range" id="radius-slider" min="0" max="40" step="1" value="22" oninput="setRadiusFine(this.value)" style="flex:1">
+        <span id="radius-val" style="font-size:12px;font-weight:800;color:var(--pd);min-width:34px">22px</span>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_sb_opacity">🫧 Sidebar opacity</label>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <input type="range" id="sb-opacity-slider" min="50" max="100" step="2" value="98" oninput="setSbOpacity(this.value)" style="flex:1">
+        <span id="sb-opacity-val" style="font-size:12px;font-weight:800;color:var(--pd);min-width:34px">98%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:11px;color:var(--fa);min-width:34px">blur</span>
+        <input type="range" id="sb-blur-slider" min="0" max="40" step="2" value="20" oninput="setSbBlur(this.value)" style="flex:1">
+        <span id="sb-blur-val" style="font-size:12px;font-weight:800;color:var(--pd);min-width:34px">20px</span>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_sb_mode">📌 Sidebar mode</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm bp" onclick="setSbMode('normal')" data-sm="normal" data-i="sbm_normal">☰ Normal</button>
+        <button class="btn bsm" onclick="setSbMode('icons')" data-sm="icons" data-i="sbm_icons">⬡ Icons only</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_tilt">🎲 3D card tilt</label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin:0">
+        <input type="checkbox" id="tilt-tog" onchange="setTilt(this.checked)">
+        <span data-i="tilt_hint">Subtle 3D tilt on stat cards &amp; theme swatches</span>
+      </label>
+    </div>
+    <div class="fg">
+      <label data-i="l_sounds">🔔 Sound effects</label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin:0">
+        <input type="checkbox" id="sounds-tog" onchange="setSounds(this.checked)">
+        <span data-i="sounds_hint">Sounds for task completion, habits, timer &amp; streaks</span>
+      </label>
+    </div>
+    <div class="fg">
+      <label data-i="l_view_anim">🎞 View animations</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bsm bp" onclick="setViewAnim('on')" data-va="on" data-i="va_full">✦ Full</button>
+        <button class="btn bsm" onclick="setViewAnim('subtle')" data-va="subtle" data-i="va_subtle">◎ Subtle</button>
+        <button class="btn bsm" onclick="setViewAnim('off')" data-va="off" data-i="va_off">○ Off</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label data-i="l_diary_wg">📓 Diary word goal</label>
+      <div style="display:flex;align-items:center;gap:8px">
+        <input type="number" id="diary-wg" min="0" max="2000" step="25" placeholder="0 = off" style="width:90px" oninput="setDiaryWordGoal(this.value)">
+        <span style="font-size:11px;color:var(--fa)" data-i="l_diary_wg_unit">words per entry</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 data-i="sh_extract">🎨 Extract theme from image</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:11px;color:var(--mu);margin-bottom:10px" data-i="hint_extract">Paste any image URL — Color Thief extracts its dominant palette and applies it as your theme.</p>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <input type="text" id="ct-url" placeholder="https://..." style="flex:1">
+      <button class="btn bp bsm" onclick="extractThemeFromImage()">✦ Extract</button>
+    </div>
+    <div id="ct-preview" style="margin-top:8px;display:none"></div>
+  </div>
+
+  <h3 data-i="sh_lang">🌐 Language / 言語</h3>
+  <div class="card" style="margin-bottom:6px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn bsm" id="lang-en" onclick="setLang('en')">🇦🇺 English</button>
+      <button class="btn bsm" id="lang-jp" onclick="setLang('jp')">🇯🇵 日本語</button>
+    </div>
+    <p id="lang-note" style="font-size:12px;color:var(--mu);margin-top:10px"></p>
+  </div>
+
+  <h3>🎀 Page stickers</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:12px;color:var(--mu);margin-bottom:10px" id="stk-page-hint">drag stickers anywhere on the page — hit the 🧸 button to enter sticker mode</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn bsm bp" onclick="toggleStickerMode()">🧸 <span id="stk-mode-lbl">enter sticker mode</span></button>
+      <button class="btn bsm bd" onclick="clearPageStickers()">✕ clear all page stickers</button>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--fa)" id="stk-count-lbl"></div>
+  </div>
+
+  <h3 data-i="sh_stk">🧸 Sidebar stickers</h3>
+  <div class="card" style="margin-bottom:6px">
+    <div class="ct" style="margin-bottom:8px" data-i="c_stklib">Library — click to add to sidebar</div>
+    <div id="stk-lib" style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px"></div>
+    <div class="ct" style="margin-bottom:5px" data-i="c_stkcur">Your stickers — click to remove</div>
+    <div id="stk-cur" class="stk-cur-box" style="display:flex;gap:8px;flex-wrap:wrap;min-height:36px;background:var(--faa);border-radius:10px;padding:8px;border:2px dashed var(--brm)"></div>
+    <div style="margin-top:10px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+      <input type="text" id="stk-custom" placeholder="paste emoji ✦" style="width:100px;font-family:var(--ej);font-size:16px">
+      <button class="btn bsm" onclick="addStickerCustom()" data-i="b_addsticker">+ Add</button>
+      <button class="btn bd bsm" onclick="clearStickers()" data-i="b_clearstk">Clear all</button>
+    </div>
+    <div style="margin-top:14px">
+      <div class="ct" style="margin-bottom:8px" data-i="c_stkimg">🖼 image stickers (PNG / GIF) — click to remove</div>
+      <div id="stk-img-cur" class="stk-cur-box" style="display:flex;gap:8px;flex-wrap:wrap;min-height:48px;background:var(--faa);border-radius:10px;padding:8px;border:2px dashed var(--brm)"></div>
+      <div style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <input type="text" id="stk-img-url" placeholder="paste image URL…" style="flex:1;min-width:160px;font-size:12px">
+        <button class="btn bsm" onclick="addImageStickerUrl()" data-i="b_addimgstk">+ from URL</button>
+        <label class="btn bsm" style="cursor:pointer" data-i="b_uploadstk">📁 upload<input type="file" accept="image/*,.gif" multiple style="display:none" onchange="uploadImageStickers(this)"></label>
+      </div>
+    </div>
+  </div>
+
+  <h3 data-i="sh_particles">🌸 Falling particles</h3>
+  <div class="card" style="margin-bottom:6px">
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:12px">
+      <input type="checkbox" id="petal-tog" onchange="S.petals=this.checked;saveData();togglePetals(this.checked)">
+      <span data-i="l_particles">Enable falling particles</span>
+    </label>
+    <div class="ct" style="margin-bottom:8px" data-i="c_ptypes">What falls — click to toggle</div>
+    <div id="petal-all" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px"></div>
+    <label data-i="l_speed">Fall speed</label>
+    <input type="range" min="2" max="20" value="10" id="petal-speed" oninput="S.petalSpeed=parseInt(this.value);saveData();restartPetals()">
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--fa);margin-top:2px">
+      <span data-i="l_gentle">gentle 🌿</span><span data-i="l_chaotic">chaotic 🌪</span>
+    </div>
+  </div>
+
+  <h3 data-i="sh_bg">🖼 Background image / GIF</h3>
+  <div class="card" style="margin-bottom:6px">
+    <p style="font-size:11px;color:var(--mu);margin-bottom:12px" data-i="hint_bg">Paste an image or GIF URL. Set separately for light and dark mode.</p>
+    <div class="fg">
+      <label data-i="l_bg_light">☀️ Light mode URL</label>
+      <input type="text" id="s-bg-light" placeholder="https://..." oninput="previewBg('light')">
+      <img id="bg-prev-light" class="bg-preview" alt="">
+    </div>
+    <div class="fg">
+      <label data-i="l_bg_dark">🌙 Dark mode URL</label>
+      <input type="text" id="s-bg-dark" placeholder="https://..." oninput="previewBg('dark')">
+      <img id="bg-prev-dark" class="bg-preview" alt="">
+    </div>
+    <div class="fg">
+      <label data-i="l_bg_opacity">Opacity</label>
+      <input type="range" min="0" max="60" value="20" id="s-bg-opacity" oninput="saveBgSettings()">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--fa);margin-top:2px"><span data-i="l_subtle">subtle</span><span data-i="l_vivid">vivid</span></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">
+      <button class="btn bp bsm" onclick="saveBgSettings()" data-i="b_save">Save ✦</button>
+      <button class="btn bg_ bsm" onclick="clearBgSettings()" data-i="b_bg_clear">Clear</button>
+    </div>
+  </div>
+
+  <h3 data-i="sh_data">💾 Data &amp; Storage</h3>
+  <div class="card" style="margin-bottom:6px">
+    <div id="fsa-status-banner" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;margin-bottom:12px;font-size:12px;font-weight:700;border:2px solid var(--br);background:var(--faa)">
+      <span id="fsa-status-icon" style="font-size:20px;font-family:var(--ej)">📁</span>
+      <div style="flex:1;min-width:0">
+        <div id="fsa-status-label" style="color:var(--tx)">Checking storage…</div>
+        <div id="fsa-status-path" style="font-size:10px;color:var(--mu);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div>
+      </div>
+      <button class="btn bsm bg_" id="fsa-reconnect-btn" style="display:none" onclick="fsaReconnect()">🔗 Reconnect</button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <button class="btn bsm bp" onclick="exportData()" data-i="b_export">📥 Export backup</button>
+      <label class="btn bsm" style="cursor:pointer"><span data-i="b_import">📤 Import backup</span><input type="file" accept=".json" style="display:none" onchange="importData(this)"></label>
+      <button class="btn bsm" data-i="b_changefile" onclick="switchDataFile()" style="margin-left:auto">📂 Change file</button>
+      <button class="btn bsm bd" data-i="b_reset" onclick="clearAll()">🗑 Reset</button>
+    </div>
+    <p id="s-expinfo" style="font-size:11px;color:var(--fa);margin-bottom:8px"></p>
+  </div>
+</div>
+
+
+</main>
+
+<button class="fab" onclick="openQuickAdd()" title="Quick add">+</button>
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal"><div id="modal-body"></div></div>
+</div>
+
+<!-- ── App script ────────────────────────────────────────────────── -->
+<script src="script.js"></script>
+</body>
+</html>
