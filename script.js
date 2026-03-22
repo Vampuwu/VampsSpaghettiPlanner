@@ -1,30 +1,53 @@
 const CIRC = 553;
 
 const THEMES = [
-  {n:'🌸 Sakura',     p:'#C4126A',pd:'#7A0038',pm:'#FF6DAF',a:'#7B2FD8',al:'#F7EFFF',g:'#0ABFA0',pl:'#FFF3FA'},
-  {n:'💜 Witch Night',p:'#8B5CF6',pd:'#4C1D95',pm:'#A78BFA',a:'#F472B6',al:'#1a0030',g:'#34D399',pl:'#1a0038'},
-  {n:'🌙 Pastel Goth',p:'#C026D3',pd:'#86198F',pm:'#E879F9',a:'#EC4899',al:'#FDF2F8',g:'#06B6D4',pl:'#FDF4FF'},
-  {n:'🪻 Lavender',   p:'#7C3AED',pd:'#5B21B6',pm:'#C4B5FD',a:'#F9A8D4',al:'#FDF2F8',g:'#34D399',pl:'#F2EEFF'},
-  {n:'🩵 Soft Blue',  p:'#3B82F6',pd:'#1D4ED8',pm:'#93C5FD',a:'#EC4899',al:'#FFF0F8',g:'#06B6D4',pl:'#EFF6FF'},
-  {n:'🌿 Mint Witch', p:'#0891B2',pd:'#0E7490',pm:'#22D3EE',a:'#A78BFA',al:'#F2EEFF',g:'#F472B6',pl:'#ECFEFF'},
-  {n:'🌹 Blood Rose', p:'#E11D48',pd:'#9F1239',pm:'#FCA5A5',a:'#8B5CF6',al:'#F3E8FF',g:'#2DD4BF',pl:'#FFF1F2'},
-  {n:'🌻 Sunflower',  p:'#D97706',pd:'#92400E',pm:'#FCD34D',a:'#EC4899',al:'#FDF2F8',g:'#059669',pl:'#FFFBEB'},
-  {n:'🌊 Ocean',      p:'#0284C7',pd:'#075985',pm:'#38BDF8',a:'#6366F1',al:'#EEF2FF',g:'#10B981',pl:'#F0F9FF'},
-  {n:'🍓 Strawberry', p:'#F43F5E',pd:'#9F1239',pm:'#FDA4AF',a:'#EC4899',al:'#FFF0F8',g:'#22C55E',pl:'#FFF1F2'},
-  {n:'✨ Stardust',   p:'#C084FC',pd:'#6D28D9',pm:'#DDD6FE',a:'#F0ABFC',al:'#FDF4FF',g:'#67E8F9',pl:'#F5F3FF'},
-  {n:'🖤 Void',       p:'#6D28D9',pd:'#4C1D95',pm:'#8B5CF6',a:'#EC4899',al:'#1a0020',g:'#10B981',pl:'#0d0020'},
-  {n:'🌈 Pride',      p:'#E11D48',pd:'#9F1239',pm:'#FCA5A5',a:'#F59E0B',al:'#FEF9C3',g:'#10B981',pl:'#FFF1F2'},
-  {n:'🫧 Soft Holo',  p:'#A78BFA',pd:'#5B21B6',pm:'#C4B5FD',a:'#67E8F9',al:'#F0FFFE',g:'#F472B6',pl:'#F5F3FF'},
-  {n:'🍬 Candy',      p:'#EC4899',pd:'#9D174D',pm:'#FBCFE8',a:'#FBBF24',al:'#FEF9C3',g:'#34D399',pl:'#FDF2F8'},
-  {n:'🌌 Cosmos',     p:'#818CF8',pd:'#3730A3',pm:'#A5B4FC',a:'#F472B6',al:'#1e1b4b',g:'#34D399',pl:'#1e1b4b'},
-  {n:'🖤 Obsidian',   p:'#FF2D55',pd:'#8B0020',pm:'#FF6680',a:'#BF5AF2',al:'#1a0030',g:'#30D158',pl:'#0d0010'},
-  {n:'🩸 Dark Roses', p:'#DC143C',pd:'#800020',pm:'#FF4060',a:'#9B59B6',al:'#1a0028',g:'#2ECC71',pl:'#0d0010'},
-  {n:'🔮 Crystal',    p:'#9B59B6',pd:'#6C3483',pm:'#C39BD3',a:'#5DADE2',al:'#1a2040',g:'#1ABC9C',pl:'#10001a'},
-  {n:'🌑 Eclipse',    p:'#E91E63',pd:'#880E4F',pm:'#F48FB1',a:'#673AB7',al:'#1a0030',g:'#4CAF50',pl:'#0d000d'},
-  {n:'⚡ Storm',      p:'#00BCD4',pd:'#006064',pm:'#80DEEA',a:'#FF5722',al:'#1a0800',g:'#8BC34A',pl:'#001a1a'},
-  {n:'🧿 Evil Eye',   p:'#3F51B5',pd:'#1A237E',pm:'#7986CB',a:'#FF4081',al:'#1a0030',g:'#00BCD4',pl:'#0a0018'},
-  {n:'🌿 Dark Fern',  p:'#2E7D32',pd:'#1B5E20',pm:'#81C784',a:'#C62828',al:'#1a0000',g:'#F9A825',pl:'#001a00'},
-  {n:'🎭 Theatre',    p:'#7B1FA2',pd:'#4A148C',pm:'#CE93D8',a:'#E65100',al:'#1a0a00',g:'#558B2F',pl:'#100018'},
+  // bgl=light bg tint, bgd=dark bg, crd=dark card, sbd=dark sidebar
+  {n:'🌸 Sakura',     p:'#C4126A',pd:'#7A0038',pm:'#FF6DAF',a:'#7B2FD8',al:'#F7EFFF',g:'#0ABFA0',pl:'#FFF3FA',
+   bgl:'#FDE8F4',bgd:'#180020',crd:'rgba(30,4,44,.97)',sbd:'rgba(18,2,32,.99)'},
+  {n:'💜 Witch Night',p:'#8B5CF6',pd:'#4C1D95',pm:'#A78BFA',a:'#F472B6',al:'#1a0030',g:'#34D399',pl:'#1a0038',
+   bgl:'#F5F0FF',bgd:'#0E0022',crd:'rgba(22,6,40,.97)',sbd:'rgba(12,3,28,.99)'},
+  {n:'🌙 Pastel Goth',p:'#C026D3',pd:'#86198F',pm:'#E879F9',a:'#EC4899',al:'#FDF2F8',g:'#06B6D4',pl:'#FDF4FF',
+   bgl:'#FDF0FF',bgd:'#16001E',crd:'rgba(28,4,38,.97)',sbd:'rgba(16,2,26,.99)'},
+  {n:'🪻 Lavender',   p:'#7C3AED',pd:'#5B21B6',pm:'#C4B5FD',a:'#F9A8D4',al:'#FDF2F8',g:'#34D399',pl:'#F2EEFF',
+   bgl:'#F3EEFF',bgd:'#0E0820',crd:'rgba(20,8,38,.97)',sbd:'rgba(12,4,28,.99)'},
+  {n:'🩵 Soft Blue',  p:'#3B82F6',pd:'#1D4ED8',pm:'#93C5FD',a:'#EC4899',al:'#FFF0F8',g:'#06B6D4',pl:'#EFF6FF',
+   bgl:'#EFF6FF',bgd:'#060E20',crd:'rgba(6,14,34,.97)',sbd:'rgba(4,8,24,.99)'},
+  {n:'🌿 Mint Witch', p:'#0891B2',pd:'#0E7490',pm:'#22D3EE',a:'#A78BFA',al:'#F2EEFF',g:'#F472B6',pl:'#ECFEFF',
+   bgl:'#ECFEFF',bgd:'#030E14',crd:'rgba(4,16,24,.97)',sbd:'rgba(2,10,18,.99)'},
+  {n:'🌹 Blood Rose', p:'#E11D48',pd:'#9F1239',pm:'#FCA5A5',a:'#8B5CF6',al:'#F3E8FF',g:'#2DD4BF',pl:'#FFF1F2',
+   bgl:'#FFF0F4',bgd:'#1A0008',crd:'rgba(28,2,14,.97)',sbd:'rgba(18,1,8,.99)'},
+  {n:'🌻 Sunflower',  p:'#D97706',pd:'#92400E',pm:'#FCD34D',a:'#EC4899',al:'#FDF2F8',g:'#059669',pl:'#FFFBEB',
+   bgl:'#FFFBEB',bgd:'#1A0E00',crd:'rgba(30,14,2,.97)',sbd:'rgba(20,9,1,.99)'},
+  {n:'🌊 Ocean',      p:'#0284C7',pd:'#075985',pm:'#38BDF8',a:'#6366F1',al:'#EEF2FF',g:'#10B981',pl:'#F0F9FF',
+   bgl:'#EFF8FF',bgd:'#04101A',crd:'rgba(4,16,28,.97)',sbd:'rgba(2,10,20,.99)'},
+  {n:'🍓 Strawberry', p:'#F43F5E',pd:'#9F1239',pm:'#FDA4AF',a:'#EC4899',al:'#FFF0F8',g:'#22C55E',pl:'#FFF1F2',
+   bgl:'#FFF0F4',bgd:'#1A020A',crd:'rgba(30,2,10,.97)',sbd:'rgba(20,1,6,.99)'},
+  {n:'✨ Stardust',   p:'#C084FC',pd:'#6D28D9',pm:'#DDD6FE',a:'#F0ABFC',al:'#FDF4FF',g:'#67E8F9',pl:'#F5F3FF',
+   bgl:'#FAF5FF',bgd:'#100018',crd:'rgba(20,4,30,.97)',sbd:'rgba(12,2,22,.99)'},
+  {n:'🖤 Void',       p:'#6D28D9',pd:'#4C1D95',pm:'#8B5CF6',a:'#EC4899',al:'#1a0020',g:'#10B981',pl:'#0d0020',
+   bgl:'#F3E8FF',bgd:'#080012',crd:'rgba(14,2,24,.97)',sbd:'rgba(8,1,18,.99)'},
+  {n:'🌈 Pride',      p:'#E11D48',pd:'#9F1239',pm:'#FCA5A5',a:'#F59E0B',al:'#FEF9C3',g:'#10B981',pl:'#FFF1F2',
+   bgl:'#FFF5F5',bgd:'#1A0008',crd:'rgba(26,2,10,.97)',sbd:'rgba(16,1,6,.99)'},
+  {n:'🍬 Candy',      p:'#EC4899',pd:'#9D174D',pm:'#FBCFE8',a:'#FBBF24',al:'#FEF9C3',g:'#34D399',pl:'#FDF2F8',
+   bgl:'#FDF2F8',bgd:'#180010',crd:'rgba(28,2,20,.97)',sbd:'rgba(18,1,14,.99)'},
+  {n:'🌌 Cosmos',     p:'#818CF8',pd:'#3730A3',pm:'#A5B4FC',a:'#F472B6',al:'#1e1b4b',g:'#34D399',pl:'#1e1b4b',
+   bgl:'#EEF0FF',bgd:'#08081C',crd:'rgba(14,12,32,.97)',sbd:'rgba(8,8,24,.99)'},
+  {n:'🖤 Obsidian',   p:'#FF2D55',pd:'#8B0020',pm:'#FF6680',a:'#BF5AF2',al:'#1a0030',g:'#30D158',pl:'#0d0010',
+   bgl:'#FFF0F2',bgd:'#140006',crd:'rgba(22,2,10,.97)',sbd:'rgba(14,1,6,.99)'},
+  {n:'🩸 Dark Roses', p:'#DC143C',pd:'#800020',pm:'#FF4060',a:'#9B59B6',al:'#1a0028',g:'#2ECC71',pl:'#0d0010',
+   bgl:'#FFF0F2',bgd:'#150004',crd:'rgba(24,2,8,.97)',sbd:'rgba(14,1,4,.99)'},
+  {n:'🔮 Crystal',    p:'#9B59B6',pd:'#6C3483',pm:'#C39BD3',a:'#5DADE2',al:'#1a2040',g:'#1ABC9C',pl:'#10001a',
+   bgl:'#F8F0FF',bgd:'#0C0418',crd:'rgba(18,4,28,.97)',sbd:'rgba(10,2,20,.99)'},
+  {n:'🌑 Eclipse',    p:'#E91E63',pd:'#880E4F',pm:'#F48FB1',a:'#673AB7',al:'#1a0030',g:'#4CAF50',pl:'#0d000d',
+   bgl:'#FFF0F6',bgd:'#150010',crd:'rgba(24,2,18,.97)',sbd:'rgba(14,1,12,.99)'},
+  {n:'⚡ Storm',      p:'#00BCD4',pd:'#006064',pm:'#80DEEA',a:'#FF5722',al:'#1a0800',g:'#8BC34A',pl:'#001a1a',
+   bgl:'#F0FEFF',bgd:'#021216',crd:'rgba(2,18,22,.97)',sbd:'rgba(1,12,16,.99)'},
+  {n:'🧿 Evil Eye',   p:'#3F51B5',pd:'#1A237E',pm:'#7986CB',a:'#FF4081',al:'#1a0030',g:'#00BCD4',pl:'#0a0018',
+   bgl:'#EEF0FF',bgd:'#060818',crd:'rgba(10,10,28,.97)',sbd:'rgba(6,6,20,.99)'},
+  {n:'🌿 Dark Fern',  p:'#2E7D32',pd:'#1B5E20',pm:'#81C784',a:'#C62828',al:'#1a0000',g:'#F9A825',pl:'#001a00',
+   bgl:'#F0FFF2',bgd:'#040E04',crd:'rgba(4,14,6,.97)',sbd:'rgba(2,10,4,.99)'},
+  {n:'🎭 Theatre',    p:'#7B1FA2',pd:'#4A148C',pm:'#CE93D8',a:'#E65100',al:'#1a0a00',g:'#558B2F',pl:'#100018',
+   bgl:'#F8F0FF',bgd:'#0C0018',crd:'rgba(18,2,26,.97)',sbd:'rgba(10,1,18,.99)'},
 ];
 
 const UNIT_COLS = [
@@ -661,8 +684,7 @@ function migrateData(){
   if(S.dumpTags!==null&&S.dumpTags!==undefined&&!Array.isArray(S.dumpTags))S.dumpTags=null;
   if(!Array.isArray(S.customImgStickers))S.customImgStickers=[];
   if(!S.displayMode)S.displayMode=S.darkMode?'dark':'light';
-  // Migrate old mode name 'goth' → 'dark'
-  if(S.displayMode==='goth')S.displayMode='dark';
+  if(S.displayMode==='goth'||S.displayMode==='space')S.displayMode=S.darkMode?'dark':'light';
   if(!Array.isArray(S.pageStickers))S.pageStickers=[];
   S.dumps.forEach(d=>{if(!d.imgUrl)d.imgUrl='';});
   Object.values(S.diary).forEach(e=>{if(e&&!e.imgUrl)e.imgUrl='';});
@@ -2221,13 +2243,17 @@ function doNewTri(){
 function applyTheme(name){
   const th=THEMES.find(x=>x.n===name)||THEMES[0];
   const r=document.documentElement.style;
+  const dark=S.darkMode;
   r.setProperty('--p',th.p);r.setProperty('--pd',th.pd);r.setProperty('--pm',th.pm);
   r.setProperty('--a',th.a);r.setProperty('--al',th.al);r.setProperty('--g',th.g);r.setProperty('--pl',th.pl);
+  // Also shift bg/card/sidebar to match theme hue
+  if(dark&&th.bgd){r.setProperty('--bg',th.bgd);r.setProperty('--card',th.crd||'rgba(28,5,48,.97)');r.setProperty('--sb',th.sbd||'rgba(16,3,30,.99)');}
+  else if(!dark&&th.bgl){r.setProperty('--bg',th.bgl);}
   S.theme=name;
-  // Store into ctheme so applyCustomisation preserves them
   const ct=ctheme();ct._cp=th.p;ct._ca=th.a;
-  // Also store non-p/a vars so restoreTheme can fully restore
   ct._pd=th.pd;ct._pm=th.pm;ct._al=th.al;ct._g=th.g;ct._pl=th.pl;
+  if(th.bgd)ct._bgd=th.bgd;if(th.crd)ct._crd=th.crd;if(th.sbd)ct._sbd=th.sbd;
+  if(th.bgl)ct._bgl=th.bgl;
   saveData();
   document.querySelectorAll('.tsw').forEach(s=>s.classList.toggle('act',s.dataset.n===name));
   const t2p=document.getElementById('cc-p-t');if(t2p)t2p.value=th.p;
@@ -2237,12 +2263,15 @@ function applyTheme(name){
 /* applyColour handled below */
 /* syncColour handled below */
 function restoreTheme(){
+  const dark=S.darkMode;
   if(S.theme&&S.theme!=='custom'){
     const th=THEMES.find(x=>x.n===S.theme);
     if(th){
       const r=document.documentElement.style;
       r.setProperty('--p',th.p);r.setProperty('--pd',th.pd);r.setProperty('--pm',th.pm);
       r.setProperty('--a',th.a);r.setProperty('--al',th.al);r.setProperty('--g',th.g);r.setProperty('--pl',th.pl);
+      if(dark&&th.bgd){r.setProperty('--bg',th.bgd);r.setProperty('--card',th.crd||'rgba(28,5,48,.97)');r.setProperty('--sb',th.sbd||'rgba(16,3,30,.99)');}
+      else if(!dark&&th.bgl){r.setProperty('--bg',th.bgl);}
       const tp=document.getElementById('cc-p-t');if(tp)tp.value=th.p;
       if(typeof _syncPickr!=='undefined')_syncPickr('--p',th.p);
       const ca=document.getElementById('cc-a');if(ca){ca.value=th.a;const t=document.getElementById('cc-a-t');if(t)t.value=th.a;}
@@ -2258,6 +2287,8 @@ function restoreTheme(){
   if(ct._al)r.setProperty('--al',ct._al);
   if(ct._g)r.setProperty('--g',ct._g);
   if(ct._pl)r.setProperty('--pl',ct._pl);
+  if(dark){if(ct._bgd)r.setProperty('--bg',ct._bgd);if(ct._crd)r.setProperty('--card',ct._crd);if(ct._sbd)r.setProperty('--sb',ct._sbd);}
+  else{if(ct._bgl)r.setProperty('--bg',ct._bgl);}
 }
 
 function setFont(f){S.font=f;if(S.lang==="jp")S.fontJp=f;else S.fontEn=f;saveData();applyFont();buildFontBtns();}
@@ -2478,41 +2509,31 @@ document.addEventListener('keydown',e=>{
 });
 
 function toggleDark(){
-  const modes=['light','dark','space'];
-  const cur=modes.indexOf(S.displayMode||'light');
-  S.displayMode=modes[(cur+1)%3];
-  S.darkMode=(S.displayMode!=='light');
-  saveData();applyDark();applyBg();applySbGif();applyCustomisation();
+  S.displayMode=S.displayMode==='dark'?'light':'dark';
+  S.darkMode=(S.displayMode==='dark');
+  saveData();applyDark();buildStars();applyBg();applySbGif();applyCustomisation();
 }
 function cycleMode(){toggleDark();}
 function setMode(m){
-  S.displayMode=m;S.darkMode=(m!=='light');
-  saveData();applyDark();applyBg();applySbGif();applyCustomisation();
+  S.displayMode=m;S.darkMode=(m==='dark');
+  saveData();applyDark();buildStars();applyBg();applySbGif();applyCustomisation();
 }
 function applyDark(){
   const m=S.displayMode||'light';
   const hr=document.getElementById('hr');
   if(!hr)return;
-  // dark mode = html.dark + html.goth (femme goth aesthetic). space = html.space.
-  hr.classList.toggle('dark',  m==='dark');
-  hr.classList.toggle('goth',  m==='dark');
-  hr.classList.toggle('space', m==='space');
+  hr.classList.toggle('dark', m==='dark');
+  hr.classList.toggle('goth', m==='dark');
+  hr.classList.remove('space');
   const btn=document.getElementById('mode-btn');
   if(btn){
-    const icons={light:'☀️', dark:'🌙', space:'🌌'};
-    btn.textContent=icons[m]||'☀️';
-    btn.classList.toggle('on',m!=='light');
+    btn.textContent=m==='dark'?'🌙':'☀️';
+    btn.classList.toggle('on', m==='dark');
     btn.dataset.mode=m;
   }
   document.querySelectorAll('[data-dm]').forEach(b=>b.classList.toggle('bp',b.dataset.dm===m));
-  const jp=S.lang==='jp';
-  const modeDescs={
-    light: jp?'明るいかわいいモード ☀️':'bright & cute ☀️',
-    dark:  jp?'フェムゴスダーク。ベルベットとレースと薔薇 🌙':'femme goth dark — velvet, lace & roses 🌙',
-    space: jp?'宇宙空間。ネビュラとスターフィールド 🌌':'deep space 🌌',
-  };
   const descEl=document.getElementById('mode-desc-text');
-  if(descEl)descEl.textContent=modeDescs[m]||'';
+  if(descEl)descEl.textContent='';
 }
 function toggleJP(){setLang(S.lang==='jp'?'en':'jp');}
 function applyJP(){
@@ -2538,63 +2559,177 @@ function spawnPetal(){
   setTimeout(()=>el.remove(),(dur+0.5)*1000);
 }
 
-function buildStars(){
-  // Dark mode palette: amethyst, rose, ice tints (femme goth)
-  // Goth mode palette: blood crimson, deep violet, ember gold
-  const isDarkGoth=document.getElementById('hr')?.classList.contains('goth');
-  const starCols=isDarkGoth?[
-    `rgba(200,40,60,VAL)`,   // blood crimson
-    `rgba(200,40,60,VAL)`,
-    `rgba(160,0,40,VAL)`,   // deep blood
-    `rgba(140,20,160,VAL)`, // dark violet
-    `rgba(200,100,160,VAL)`,// rose blush
-    `rgba(255,160,60,VAL)`, // ember candle
-  ]:[
-    `rgba(255,255,255,VAL)`,
-    `rgba(255,255,255,VAL)`,
-    `rgba(255,255,255,VAL)`,
-    `rgba(210,160,255,VAL)`,  // amethyst
-    `rgba(255,160,210,VAL)`,  // rose
-    `rgba(210,255,255,VAL)`,  // ice
-  ];
-  const randCol=(op)=>starCols[Math.floor(Math.random()*starCols.length)].replace('VAL', op.toFixed(2));
+/* ── CANVAS STARFIELD ─────────────────────────────────────────── */
+let _starCanvas=null,_starCtx=null,_starRAF=null,_stars=[],_shooters=[];
 
-  // Three layers: dense tiny, medium, large sparkles
-  const cfg=[
-    {id:'sf1',n:140,min:.4,max:1.2},   // dense tiny pinpoints
-    {id:'sf2',n:55,min:1.0,max:2.2},   // medium stars
-    {id:'sf3',n:18,min:1.8,max:3.2},   // large, some get sparkle cross
+function buildStars(){
+  // Clear any previous canvas
+  const layer=document.getElementById('star-layer');
+  if(!layer)return;
+  layer.innerHTML='';
+  if(_starRAF){cancelAnimationFrame(_starRAF);_starRAF=null;}
+
+  const canvas=document.createElement('canvas');
+  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;';
+  layer.appendChild(canvas);
+  _starCanvas=canvas;
+  _starCtx=canvas.getContext('2d');
+
+  function resize(){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  // Generate stars — 3 layers of density/size
+  _stars=[];
+  const W=()=>canvas.width, H=()=>canvas.height;
+
+  // Colour palette: white-hot cores, amethyst/rose/ice halos
+  const COLS=[
+    [255,255,255],[255,255,255],[255,255,255],[255,255,255],
+    [210,160,255],[255,160,210],[180,220,255],[255,220,180]
   ];
-  cfg.forEach(({id,n,min,max})=>{
-    const el=document.getElementById(id);if(!el)return;
-    let h='';
-    for(let i=0;i<n;i++){
-      const x=Math.random()*100,y=Math.random()*100;
-      const s=min+Math.random()*(max-min);
-      const op=0.28+Math.random()*0.62;
-      const dur=1.8+Math.random()*4.0,dl=Math.random()*5;
-      const col=randCol(op);
-      // Large layer: some get a CSS ✦ cross sparkle shape instead of circle
-      const isSparkle=(id==='sf3'&&Math.random()>.35);
-      if(isSparkle){
-        const arm=s*2.4;
-        const roseOrAmethyst=Math.random()>.5?'rgba(255,160,210,VAL)'.replace('VAL',op.toFixed(2)):`rgba(210,160,255,VAL)`.replace('VAL',op.toFixed(2));
-        h+=`<div style="position:absolute;left:${x}%;top:${y}%;width:${arm}px;height:${arm}px;opacity:${op.toFixed(2)};animation:sblink ${dur}s ease-in-out ${dl}s infinite;transform-origin:center">
-          <svg viewBox="0 0 10 10" width="${arm}" height="${arm}" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
-            <path d="M5 0 L5.4 4.2 L9 5 L5.4 5.8 L5 10 L4.6 5.8 L1 5 L4.6 4.2Z" fill="${roseOrAmethyst.replace('VAL',op.toFixed(2)).replace('rgba(210,160,255,','rgba(210,160,255,').replace('rgba(255,160,210,','rgba(255,160,210,')}"/>
-          </svg>
-        </div>`;
-      } else {
-        h+=`<div style="position:absolute;left:${x}%;top:${y}%;width:${s}px;height:${s}px;background:${col};border-radius:50%;animation:sblink ${dur}s ease-in-out ${dl}s infinite"></div>`;
+
+  // Dense tiny pinpoints (400)
+  for(let i=0;i<400;i++){
+    const c=COLS[Math.floor(Math.random()*4)]; // mostly white
+    _stars.push({
+      x:Math.random(),y:Math.random(),
+      r:0.3+Math.random()*0.8,
+      baseOp:0.15+Math.random()*0.55,
+      op:0,phase:Math.random()*Math.PI*2,
+      speed:0.4+Math.random()*1.2,
+      col:c, glow:false
+    });
+  }
+  // Medium stars with twinkle (120)
+  for(let i=0;i<120;i++){
+    const c=COLS[Math.floor(Math.random()*COLS.length)];
+    _stars.push({
+      x:Math.random(),y:Math.random(),
+      r:0.8+Math.random()*1.4,
+      baseOp:0.35+Math.random()*0.50,
+      op:0,phase:Math.random()*Math.PI*2,
+      speed:0.3+Math.random()*0.9,
+      col:c, glow:true, glowR:2+Math.random()*5
+    });
+  }
+  // Large sparkle stars with 4-point cross (28)
+  for(let i=0;i<28;i++){
+    const c=COLS[Math.floor(Math.random()*COLS.length)];
+    _stars.push({
+      x:Math.random(),y:Math.random(),
+      r:1.2+Math.random()*2.2,
+      baseOp:0.55+Math.random()*0.45,
+      op:0,phase:Math.random()*Math.PI*2,
+      speed:0.25+Math.random()*0.7,
+      col:c, glow:true, glowR:6+Math.random()*14,
+      sparkle:true, rot:Math.random()*Math.PI/4
+    });
+  }
+
+  // Shooting stars pool
+  _shooters=[];
+  function spawnShooter(){
+    _shooters.push({
+      x:0.1+Math.random()*0.7,
+      y:Math.random()*0.4,
+      vx:0.003+Math.random()*0.006,
+      vy:0.001+Math.random()*0.003,
+      len:0.06+Math.random()*0.10,
+      life:1,decay:0.018+Math.random()*0.012,
+      op:0.9+Math.random()*0.1
+    });
+  }
+  setInterval(()=>{if(document.getElementById('hr')?.classList.contains('dark'))spawnShooter();},3000+Math.random()*4000);
+
+  let t=0;
+  function draw(){
+    _starRAF=requestAnimationFrame(draw);
+    if(!document.getElementById('hr')?.classList.contains('dark'))return;
+    const w=canvas.width,h=canvas.height;
+    _starCtx.clearRect(0,0,w,h);
+    t+=0.016;
+
+    _stars.forEach(s=>{
+      const op=s.baseOp*(0.5+0.5*Math.sin(t*s.speed+s.phase));
+      const x=s.x*w, y=s.y*h;
+      const [r,g,b]=s.col;
+      _starCtx.globalAlpha=op;
+
+      if(s.glow){
+        // Soft glow halo
+        const grad=_starCtx.createRadialGradient(x,y,0,x,y,s.glowR);
+        grad.addColorStop(0,`rgba(${r},${g},${b},${Math.min(1,op*1.4)})`);
+        grad.addColorStop(0.4,`rgba(${r},${g},${b},${op*0.4})`);
+        grad.addColorStop(1,'rgba(0,0,0,0)');
+        _starCtx.fillStyle=grad;
+        _starCtx.beginPath();
+        _starCtx.arc(x,y,s.glowR,0,Math.PI*2);
+        _starCtx.fill();
       }
-    }
+
+      if(s.sparkle){
+        // 4-point star cross
+        const arm=s.r*3.5*(0.8+0.2*Math.sin(t*s.speed*2+s.phase));
+        _starCtx.globalAlpha=Math.min(1,op*1.2);
+        _starCtx.strokeStyle=`rgba(${r},${g},${b},1)`;
+        _starCtx.lineWidth=s.r*0.5;
+        _starCtx.lineCap='round';
+        // Horizontal arm
+        _starCtx.beginPath();
+        _starCtx.moveTo(x-arm,y);_starCtx.lineTo(x+arm,y);
+        _starCtx.stroke();
+        // Vertical arm
+        _starCtx.beginPath();
+        _starCtx.moveTo(x,y-arm);_starCtx.lineTo(x,y+arm);
+        _starCtx.stroke();
+        // Diagonal arms (shorter)
+        const d=arm*0.45;
+        _starCtx.lineWidth=s.r*0.3;
+        _starCtx.globalAlpha=op*0.6;
+        _starCtx.beginPath();
+        _starCtx.moveTo(x-d,y-d);_starCtx.lineTo(x+d,y+d);
+        _starCtx.stroke();
+        _starCtx.beginPath();
+        _starCtx.moveTo(x+d,y-d);_starCtx.lineTo(x-d,y+d);
+        _starCtx.stroke();
+      }
+
+      // Core dot
+      _starCtx.globalAlpha=Math.min(1,op*1.3);
+      _starCtx.fillStyle=`rgba(${r},${g},${b},1)`;
+      _starCtx.beginPath();
+      _starCtx.arc(x,y,s.r,0,Math.PI*2);
+      _starCtx.fill();
+    });
+
     // Shooting stars
-    for(let i=0;i<3;i++){const x=Math.random()*80,y=Math.random()*60,dl=10+Math.random()*30;h+=`<div style="position:absolute;left:${x}%;top:${y}%;width:2px;height:2px;background:rgba(240,200,255,0.9);border-radius:50%;animation:shoot ${2.5+Math.random()*3}s linear ${dl}s infinite;opacity:0"></div>`;}
-    el.innerHTML=h;
-  });
+    _shooters=_shooters.filter(sh=>{
+      sh.x+=sh.vx;sh.y+=sh.vy;sh.life-=sh.decay;
+      if(sh.life<=0)return false;
+      const x1=sh.x*w,y1=sh.y*h;
+      const x0=(sh.x-sh.vx*sh.len/sh.vx)*w;
+      const y0=(sh.y-sh.vy*sh.len/sh.vx)*h;
+      const grad=_starCtx.createLinearGradient(x0,y0,x1,y1);
+      grad.addColorStop(0,'rgba(255,255,255,0)');
+      grad.addColorStop(1,`rgba(255,245,255,${sh.life*sh.op})`);
+      _starCtx.globalAlpha=1;
+      _starCtx.strokeStyle=grad;
+      _starCtx.lineWidth=1.5;
+      _starCtx.lineCap='round';
+      _starCtx.beginPath();
+      _starCtx.moveTo(x0,y0);_starCtx.lineTo(x1,y1);
+      _starCtx.stroke();
+      return true;
+    });
+    _starCtx.globalAlpha=1;
+  }
+  draw();
 }
 
-(()=>{const s=document.createElement('style');s.textContent='@keyframes sblink{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:1;transform:scale(1.6)}}';document.head.appendChild(s);})();
 
 function buildSidebarStickers(){
   const row=document.getElementById('stk-row');if(!row)return;
@@ -2716,7 +2851,7 @@ function setSbw(v){ctheme().styleSbw=v;saveCtheme();}
 function setRainbow(on){ctheme().rainbow=on;saveCtheme();}
 
 function setCardPattern(v){ctheme().cardPattern=v;saveCtheme();}
-function setHolo(on){ctheme().holo=!!on;saveCtheme();}
+function setHolo(on){/* holo removed */}
 const CURSOR_EMOJIS=['✦','🌸','💗','⭐','🌙','✨','🎀','💜','🔮','🦋','🌺','💫'];
 function setCursor(on){
   S.cursorKawaii=on;saveData();
@@ -2820,7 +2955,7 @@ function bootApp(){
   }
   restoreTheme();
   if(!S.displayMode)S.displayMode=S.darkMode?'dark':'light';
-  if(S.displayMode==='goth')S.displayMode='dark';
+  if(S.displayMode==='goth'||S.displayMode==='space')S.displayMode=S.darkMode?'dark':'light';
   applyDark();
   applyJP();
   applyFont();
