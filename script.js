@@ -537,30 +537,44 @@ function hideSetup(){document.getElementById('setup-overlay').style.display='non
 function showPrivacyWelcome(onContinue){
   const seen=localStorage.getItem('gmst_privacy_seen');
   if(seen){onContinue();return;}
+  const isJP=(navigator.language||'').toLowerCase().startsWith('ja');
   const overlay=document.createElement('div');
   overlay.style.cssText='position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(10,0,25,.75);backdrop-filter:blur(16px)';
-  overlay.innerHTML=`
-    <div style="background:rgba(18,0,38,.97);border:1.5px solid color-mix(in srgb, var(--p) 32%, transparent);border-radius:28px;padding:38px 34px;max-width:460px;width:100%;box-shadow:0 0 80px color-mix(in srgb, var(--p) 14%, transparent),0 0 180px color-mix(in srgb, var(--a) 10%, transparent);text-align:center;animation:mpop .3s cubic-bezier(.34,1.56,.64,1)">
+  overlay.innerHTML=isJP ? `
+    <div style="background:rgba(18,0,38,.97);border:1.5px solid color-mix(in srgb, var(--p) 32%, transparent);border-radius:28px;padding:38px 34px;max-width:480px;width:100%;box-shadow:0 0 80px color-mix(in srgb, var(--p) 14%, transparent),0 0 180px color-mix(in srgb, var(--a) 10%, transparent);text-align:center;animation:mpop .3s cubic-bezier(.34,1.56,.64,1)">
       <div style="font-size:48px;margin-bottom:14px;font-family:Apple Color Emoji,Noto Color Emoji,sans-serif">🔒</div>
-      <h2 style="font-family:Fredoka One,cursive;font-size:23px;background:linear-gradient(135deg,#FF6EB4,#A832F0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;line-height:1.25">break free from the cloud ✦</h2>
+      <h2 style="font-family:'Fredoka One',cursive;font-size:22px;background:linear-gradient(135deg,#FF6EB4,#A832F0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;line-height:1.35">✦ クラウドとはおさらば ✦</h2>
       <div style="background:rgba(220,100,168,.07);border:1px solid rgba(220,100,168,.18);border-radius:16px;padding:18px 20px;margin-bottom:20px;text-align:left">
-        <p style="font-size:13px;color:rgba(255,210,240,.82);line-height:1.8;margin:0">
-          <span style="display:block;margin-bottom:8px">✦ <b style="color:#FF96C8">zero data leaves your device.</b> your diary, your mood, your grades — all of it lives in a file on your computer. not our servers. not anyone's servers.</span>
-          <span style="display:block;margin-bottom:8px">✦ <b style="color:#C8A0FF">no accounts.</b> no email. no password. no tracking. no ads. ever.</span>
-          <span style="display:block">✦ <b style="color:#90D8FF">you own your data</b> the way you own a journal.</span>
+        <p style="font-size:13px;color:rgba(255,210,240,.85);line-height:1.9;margin:0">
+          <span style="display:block;margin-bottom:10px">✦ <b style="color:#FF96C8">データは一切どこにも送られない。</b>勉強計画も、日記も、成績も、全部あなたのパソコンのファイルの中にある。うちのサーバーでもない、誰かのサーバーでもない。マジで。</span>
+          <span style="display:block;margin-bottom:10px">✦ <b style="color:#C8A0FF">アカウント不要。メルアド不要。パスワード不要。</b>トラッキングも広告もない。本当に何もない。企業のクソみたいな仕組み、全部なし。</span>
+          <span style="display:block">✦ <b style="color:#FFB8E8">このデータはあなたのもの。</b>ノートに書いたことが自分のものなのと同じように。</span>
         </p>
       </div>
-      <p style="font-size:11.5px;color:rgba(255,180,220,.45);margin-bottom:22px;font-style:italic">this popup shows once ♡</p>
-      <button onclick="this.closest('div[style]').parentNode.remove();localStorage.setItem('gmst_privacy_seen','1');" style="background:linear-gradient(135deg,var(--p),var(--a));color:white;border:none;border-radius:14px;padding:13px 32px;font-size:15px;font-weight:800;cursor:pointer;font-family:Nunito,sans-serif;box-shadow:0 4px 24px rgba(238,16,112,.45);transition:transform .15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+      <p style="font-size:11.5px;color:rgba(255,180,220,.45);margin-bottom:22px;font-style:italic">このポップアップは一回しか出ないよ ♡</p>
+      <button style="background:linear-gradient(135deg,var(--p),var(--a));color:white;border:none;border-radius:14px;padding:13px 32px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 24px rgba(238,16,112,.45);transition:transform .15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        わかった、はじめよ ✦
+      </button>
+    </div>` : `
+    <div style="background:rgba(18,0,38,.97);border:1.5px solid color-mix(in srgb, var(--p) 32%, transparent);border-radius:28px;padding:38px 34px;max-width:480px;width:100%;box-shadow:0 0 80px color-mix(in srgb, var(--p) 14%, transparent),0 0 180px color-mix(in srgb, var(--a) 10%, transparent);text-align:center;animation:mpop .3s cubic-bezier(.34,1.56,.64,1)">
+      <div style="font-size:48px;margin-bottom:14px;font-family:Apple Color Emoji,Noto Color Emoji,sans-serif">🔒</div>
+      <h2 style="font-family:'Fredoka One',cursive;font-size:23px;background:linear-gradient(135deg,#FF6EB4,#A832F0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;line-height:1.25">✦ Break free from the cloud ✦</h2>
+      <div style="background:rgba(220,100,168,.07);border:1px solid rgba(220,100,168,.18);border-radius:16px;padding:18px 20px;margin-bottom:20px;text-align:left">
+        <p style="font-size:13px;color:rgba(255,210,240,.85);line-height:1.85;margin:0">
+          <span style="display:block;margin-bottom:10px">✦ <b style="color:#FF96C8">Absolutely no data leaves your device.</b> Everything you track here — your study plans, assessments, diary entries — lives in a file on your computer. Not on some company's servers.</span>
+          <span style="display:block;margin-bottom:10px">✦ <b style="color:#C8A0FF">No accounts. No email. No password. No tracking. No ads. Ever.</b> All the corporate slop, begone ✦</span>
+          <span style="display:block">✦ <b style="color:#FFB8E8">You own your data</b> the same way you own a journal.</span>
+        </p>
+      </div>
+      <p style="font-size:11.5px;color:rgba(255,180,220,.45);margin-bottom:22px;font-style:italic">Don't worry, this popup shows once ♡</p>
+      <button style="background:linear-gradient(135deg,var(--p),var(--a));color:white;border:none;border-radius:14px;padding:13px 32px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 24px rgba(238,16,112,.45);transition:transform .15s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
         got it — let's go ✦
       </button>
     </div>`;
-  // clicking outside dismisses
   overlay.addEventListener('click',e=>{
-    if(e.target===overlay){overlay.remove();localStorage.setItem('gmst_privacy_seen','1');}
+    if(e.target===overlay){overlay.remove();localStorage.setItem('gmst_privacy_seen','1');onContinue();}
   });
   document.body.appendChild(overlay);
-  // Wire up the button properly to call onContinue
   overlay.querySelector('button').addEventListener('click',()=>{
     overlay.remove();
     localStorage.setItem('gmst_privacy_seen','1');
@@ -647,8 +661,8 @@ function migrateData(){
   if(S.dumpTags!==null&&S.dumpTags!==undefined&&!Array.isArray(S.dumpTags))S.dumpTags=null;
   if(!Array.isArray(S.customImgStickers))S.customImgStickers=[];
   if(!S.displayMode)S.displayMode=S.darkMode?'dark':'light';
-  // Migrate old 'space' mode to 'goth'
-  if(S.displayMode==='space')S.displayMode='goth';
+  // Migrate old mode name 'goth' → 'dark'
+  if(S.displayMode==='goth')S.displayMode='dark';
   if(!Array.isArray(S.pageStickers))S.pageStickers=[];
   S.dumps.forEach(d=>{if(!d.imgUrl)d.imgUrl='';});
   Object.values(S.diary).forEach(e=>{if(e&&!e.imgUrl)e.imgUrl='';});
@@ -2464,7 +2478,7 @@ document.addEventListener('keydown',e=>{
 });
 
 function toggleDark(){
-  const modes=['light','dark','goth'];
+  const modes=['light','dark','space'];
   const cur=modes.indexOf(S.displayMode||'light');
   S.displayMode=modes[(cur+1)%3];
   S.darkMode=(S.displayMode!=='light');
@@ -2479,21 +2493,23 @@ function applyDark(){
   const m=S.displayMode||'light';
   const hr=document.getElementById('hr');
   if(!hr)return;
-  hr.classList.toggle('dark',m!=='light');
-  hr.classList.toggle('goth',m==='goth');
+  // dark mode = html.dark + html.goth (femme goth aesthetic). space = html.space.
+  hr.classList.toggle('dark',  m==='dark');
+  hr.classList.toggle('goth',  m==='dark');
+  hr.classList.toggle('space', m==='space');
   const btn=document.getElementById('mode-btn');
   if(btn){
-    const icons={light:'☀️',dark:'🌙',goth:'🥀'};
-    btn.textContent=icons[m]||'🌙';
+    const icons={light:'☀️', dark:'🌙', space:'🌌'};
+    btn.textContent=icons[m]||'☀️';
     btn.classList.toggle('on',m!=='light');
     btn.dataset.mode=m;
   }
   document.querySelectorAll('[data-dm]').forEach(b=>b.classList.toggle('bp',b.dataset.dm===m));
   const jp=S.lang==='jp';
   const modeDescs={
-    light: jp?'明るくてかわいい。デイタイム向き ☀️':'bright, cute & pastel. morning energy ☀️',
-    dark:  jp?'フェムゴスの美学。深紅とベルベット、夜の香り 🥀':'femme goth — blood velvet, black roses, iron lace. a whole vibe 🥀',
-    goth:  jp?'アブソリュートゴシック。真夜中のバラと儀式の蝋燭 🕯️':'full goth — midnight roses, ritual candles, void velvet 🕯️',
+    light: jp?'明るいかわいいモード ☀️':'bright & cute ☀️',
+    dark:  jp?'フェムゴスダーク。ベルベットとレースと薔薇 🌙':'femme goth dark — velvet, lace & roses 🌙',
+    space: jp?'宇宙空間。ネビュラとスターフィールド 🌌':'deep space 🌌',
   };
   const descEl=document.getElementById('mode-desc-text');
   if(descEl)descEl.textContent=modeDescs[m]||'';
@@ -2804,6 +2820,7 @@ function bootApp(){
   }
   restoreTheme();
   if(!S.displayMode)S.displayMode=S.darkMode?'dark':'light';
+  if(S.displayMode==='goth')S.displayMode='dark';
   applyDark();
   applyJP();
   applyFont();
