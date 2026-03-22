@@ -584,7 +584,7 @@ function showPrivacyWelcome(onContinue){
       <h2 style="font-family:'Fredoka One',cursive;font-size:23px;background:linear-gradient(135deg,#FF6EB4,#A832F0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;line-height:1.25">✦ Break free from the cloud ✦</h2>
       <div style="background:rgba(220,100,168,.07);border:1px solid rgba(220,100,168,.18);border-radius:16px;padding:18px 20px;margin-bottom:20px;text-align:left">
         <p style="font-size:13px;color:rgba(255,210,240,.85);line-height:1.85;margin:0">
-          <span style="display:block;margin-bottom:10px">✦ <b style="color:#FF96C8">Absolutely no data leaves your device.</b> Everything you track here — your study plans, assessments, diary entries — lives in a file on your computer. Not on some company's servers.</span>
+          <span style="display:block;margin-bottom:10px">✦ <b style="color:#FF96C8">Absolutely no data leaves your device.</b> Everything you track here, your study plans, assessments, diary entries. It all lives in a file on your computer. Not on some company's servers.</span>
           <span style="display:block;margin-bottom:10px">✦ <b style="color:#C8A0FF">No accounts. No email. No password. No tracking. No ads. Ever.</b> All the corporate slop, begone ✦</span>
           <span style="display:block">✦ <b style="color:#FFB8E8">You own your data</b> the same way you own a journal.</span>
         </p>
