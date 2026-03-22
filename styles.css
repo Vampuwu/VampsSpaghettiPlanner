@@ -16,9 +16,7 @@
   --ej:"Apple Color Emoji","Noto Color Emoji","Segoe UI Emoji","Twemoji Mozilla",sans-serif;
 }
 html.dark {
-  /* ── FEMME GOTH DARK — jewel midnight. Same pink/purple DNA as light,
-        pushed deep: aubergine bg, magenta primary, violet accent.
-        Totally different from space (cyan/indigo) and goth (blood crimson). ── */
+  /*  DARK ── */
   --bg: #120018;
   --card: rgba(28,5,48,.97);
   --sb: rgba(16,3,30,.99);
